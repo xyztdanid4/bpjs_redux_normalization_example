@@ -1,0 +1,51 @@
+/**
+ * You can add global styles to this file, and also import other style files
+ *
+ * Sass architecture:
+ * {@link} https://medium.com/@aaronverones/using-the-7-1-sass-scss-pattern-with-angular-7-bb210c015dcc
+ */
+
+@charset 'utf-8';
+
+@import 'base/spectre';
+@import 'base/font-families';
+@import 'variables/fonts';
+@import 'variables/colors';
+@import 'components/typography';
+@import 'components/buttons';
+@import 'components/labels';
+@import 'components/media';
+@import 'components/forms';
+@import 'components/ng-prime-calendar';
+
+// Angular material
+@import '~@angular/cdk/overlay-prebuilt.css';
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+html  {
+  overflow-x: hidden;
+}
+
+body,
+html {
+  height: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-size: 13px;
+}
+
+.img-responsive {
+  width: 100%;
+}
+
+.page-component-container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}

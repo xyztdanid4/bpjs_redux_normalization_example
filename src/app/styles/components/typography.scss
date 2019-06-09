@@ -1,0 +1,78 @@
+a,
+a:active,
+a:focus,
+a:hover,
+a:visited {
+  box-shadow: none;
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0.5em;
+  font-family: $font-family-secondary-bold;
+
+  &.underline {
+    padding-bottom: 4px;
+    border-bottom: 2px solid $primary-color;
+  }
+}
+
+.text-normal {
+  font-family: $font-family-primary;
+
+  &.secondary {
+    font-family: $font-family-secondary;
+  }
+}
+
+.text-bold {
+  font-family: $font-family-primary-semi-bold;
+
+  &.secondary {
+    font-family: $font-family-secondary-semi-bold;
+  }
+
+  &.bold {
+    font-family: $font-family-primary-bold;
+
+    &.secondary {
+      font-family: $font-family-secondary-bold;
+    }
+  }
+
+  &.extra {
+    font-family: $font-family-primary-extra-bold;
+
+    &.secondary {
+      font-family: $font-family-secondary-extra-bold;
+    }
+  }
+}
+
+.text-italic {
+  font-family: $font-family-primary-italic;
+
+  &.secondary {
+    font-family: $font-family-secondary-italic;
+  }
+}
+
+.text-bold-italic {
+  font-family: $font-family-primary-bold-italic;
+
+  &.secondary {
+    font-family: $font-family-secondary-bold-italic;
+  }
+}
+
+@each $size in 10, 11, 12, 13, 14, 15, 16, 18, 20, 24, 26, 32 {
+  .fs-#{$size} {
+    font-size: #{$size}px;
+  }
+}

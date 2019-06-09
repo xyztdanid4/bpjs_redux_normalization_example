@@ -21,13 +21,18 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/app/styles"
+              ]
+            },
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/app/styles/main.scss"
             ],
             "scripts": [],
             "es5BrowserSupport": true
@@ -84,7 +89,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.scss"
+              "src/app/styles/main.scss"
             ],
             "scripts": [],
             "assets": [

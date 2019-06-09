@@ -1,0 +1,30 @@
+@import 'spectre';
+
+$interticket: #39b4e3;
+
+// colors
+$white: #fff;
+$black: #000e1a;
+$gray: #909090;
+$light-gray: #a0a0a0;
+$weak-gray: #e9e9e9;
+$medium-light-gray: #eaeaea;
+$lighter-gray: #f6f6f6;
+$baby-blue: #b8d9ff;
+$light-blue: #cfe7ff;
+$lighter-blue: #f0f8ff;
+$darker-green: #135814;
+
+// callout colors
+$success-callout-background: #e1fff1;
+$success-callout-border: #39d88c;
+$error-callout-background: #ffd9e5;
+$error-callout-border: #ff0050;
+$primary-callout-background: $primary-color;
+$primary-callout-border: $primary-color;
+
+// haeder - footer - body - background
+$footer-bg: #202020;
+
+// site theme color
+$site-theme-color: #484848;

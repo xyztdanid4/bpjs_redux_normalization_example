@@ -1,0 +1,29 @@
+.label-rounded {
+  border-radius: 20px;
+  color: $white;
+
+  &.label-primary {
+    color: $white;
+  }
+
+  &.label-error {
+    color: $white;
+  }
+
+  &.label-success {
+    color: $darker-green;
+  }
+
+}
+
+.label-primary {
+  color: $white;
+}
+
+.label-error {
+  color: $white;
+}
+
+.label-success {
+  color: $darker-green;
+}

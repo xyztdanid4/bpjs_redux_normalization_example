@@ -1,0 +1,50 @@
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-recommended-scss",
+    "stylelint-config-idiomatic-order",
+     "./node_modules/prettier-stylelint/config.js"
+  ],
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "rules": {
+    "indentation": 2,
+    "string-quotes": "single",
+    "no-empty-source": null,
+    "selector-pseudo-element-no-unknown": [true, {
+      "ignorePseudoElements": ["ng-deep"]
+    }],
+    "function-url-quotes": [ "always", {
+      "except": ["empty"]
+    }],
+    "selector-attribute-quotes": "always",
+    "max-nesting-depth": 10,
+    "selector-max-compound-selectors": 10,
+    "at-rule-no-vendor-prefix": true,
+    "media-feature-name-no-vendor-prefix": true,
+    "property-no-vendor-prefix": true,
+    "selector-no-vendor-prefix": true,
+    "value-no-vendor-prefix": true,
+    "selector-class-pattern": "[a-z-]+",
+    "selector-id-pattern": "[a-z-]+",
+    "selector-max-id": 10,
+    "selector-max-universal": 3,
+    "unit-whitelist": ["px", "%", "em", "rem", "vw", "vh", "deg", "s", "ms"],
+    "max-empty-lines": 2,
+    "selector-type-no-unknown": null,
+    "scss/selector-no-redundant-nesting-selector": true,
+    "scss/dollar-variable-colon-newline-after": "always-multi-line",
+    "scss/dollar-variable-colon-space-after": "always-single-line",
+    "scss/dollar-variable-colon-space-before": "never",
+    "scss/dollar-variable-no-missing-interpolation": true,
+    "scss/double-slash-comment-whitespace-inside": "always",
+    "scss/media-feature-value-dollar-variable": "always",
+    "scss/operator-no-newline-after": true,
+    "scss/operator-no-newline-before": true,
+    "scss/operator-no-unspaced": true,
+    "color-no-invalid-hex": true,
+    "at-rule-no-unknown": null,
+    "font-family-no-missing-generic-family-keyword": null
+  }
+}

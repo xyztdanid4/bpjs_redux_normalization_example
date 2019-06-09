@@ -1,0 +1,25 @@
+:host {
+  display: flex;
+  width: 100%;
+  flex: 1 0 auto;
+  flex-direction: column;
+
+  .page-title-container {
+    margin-top: 4rem;
+  }
+
+  .page-content-container {
+    padding: 0;
+    margin: 0;
+
+    .columns {
+      padding: 0;
+      margin: 0;
+
+      .column {
+        padding: 0;
+        margin: 0;
+      }
+    }
+  }
+}

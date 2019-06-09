@@ -1,0 +1,23 @@
+@import 'variables/colors';
+
+:host {
+  display: flex;
+  height: 100%;
+  flex-flow: column;
+  justify-content: center;
+
+  h1, span {
+    text-align: center;
+  }
+
+  span {
+    color: $primary-color;
+    font-size: 10rem;
+  }
+
+  app-button {
+    margin-top: 2rem;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}

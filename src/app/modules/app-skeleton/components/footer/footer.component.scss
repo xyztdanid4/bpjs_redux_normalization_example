@@ -1,0 +1,29 @@
+@import 'variables/breakpoints';
+@import 'variables/colors';
+@import 'variables/fonts';
+
+:host {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: $footer-bg;
+  font-size: 12px;
+
+  .label-columns {
+    .footer-label {
+      display: inline-flex;
+      padding: 12px;
+
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+  }
+
+  @media screen and (max-width: $size-md) {
+    .label-columns {
+      .column {
+        text-align: center;
+      }
+    }
+  }
+}

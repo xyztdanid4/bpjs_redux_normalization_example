@@ -1,0 +1,68 @@
+@import 'variables/colors';
+@import 'variables/fonts';
+@import 'variables/layout';
+
+:host {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  background-color: $site-theme-color;
+  color: $white;
+
+  header {
+    display: flex;
+
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .logo {
+        display: flex;
+        flex-direction: column;
+        padding-right: 12px;
+        cursor: pointer;
+
+        img {
+          height: 50px;
+        }
+
+        .by {
+          font-size: 10px;
+        }
+
+        .inter,
+        .ticket {
+          font-family: $font-family-primary-bold;
+          font-size: 15px;
+        }
+
+        .ticket {
+          color: $interticket;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $size-md) {
+    padding: 0;
+
+    header {
+      .header-container {
+        .logo {
+          img {
+            height: 40px;
+          }
+
+          .by {
+            font-size: 8px;
+          }
+
+          .inter,
+          .ticket {
+            font-size: 11px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+@import '~spectre.css/src/variables';
+@import './breakpoints';
+
+$grid-spacing: ($layout-spacing / ($layout-spacing * 0 + 1)) * $html-font-size;
+
+$grid-xl: $grid-spacing * 2 + $size-xl;
+$grid-lg: $grid-spacing * 2 + $size-lg;
+$grid-md: $grid-spacing * 2 + $size-md;
+$grid-sm: $grid-spacing * 2 + $size-sm;
+$grid-xs: $grid-spacing * 2 + $size-xs;
+
+$zindex-0: $zindex-0;
+$zindex-1: $zindex-1;
+$zindex-2: $zindex-2;
+$zindex-3: $zindex-3;
+$zindex-4: $zindex-4;
