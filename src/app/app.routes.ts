@@ -10,7 +10,6 @@ export const AppRoutes: Routes = [
   },
   {
     path: '**',
-    data: { title: 'stemx_page_not_found' },
     component: PageNotFoundComponent
   }
 ];

@@ -10,7 +10,6 @@ export const AppSkeletonRoutes: Routes = [
       {
         path: '',
         component: EventRouterComponent,
-        data: { title: '' },
         loadChildren: 'app/modules/event/event.module#EventModule'
       }
     ]
