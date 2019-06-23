@@ -1,0 +1,37 @@
+@import 'variables/colors';
+
+:host {
+  display: block;
+
+  .callout {
+    padding: 24px;
+    border-radius: 4px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.05);
+
+    p {
+      margin-bottom: 7px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &.success {
+      border: solid 1px $success-color;
+      background-color: $success-color;
+      color: $dark-color;
+    }
+
+    &.error {
+      border: solid 1px $error-color;
+      background-color: $error-color;
+      color: $dark-color;
+    }
+
+    &.primary {
+      border: solid 1px transparent;
+      background-color: $primary-color;
+      color: $primary-color;
+    }
+  }
+}

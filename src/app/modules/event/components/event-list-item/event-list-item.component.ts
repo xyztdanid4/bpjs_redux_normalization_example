@@ -3,6 +3,8 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Event } from '../../models/event.model';
 import { EventService } from '@modules/event/services/event.service';
 import { take } from 'rxjs/operators';
+import { Callout } from '@shared/models/callout/callout.model';
+import { CalloutType } from '@shared/enums/callout-type.enum';
 
 @Component({
   selector: 'app-event-list-item',
@@ -10,6 +12,18 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./event-list-item.component.scss']
 })
 export class EventListItemComponent implements OnInit {
+
+  readonly emptyPlaceCallout: Callout = {
+    title: 'Empty event place',
+    description: '',
+    type: CalloutType.ERROR
+  };
+
+  readonly emptyPricingCallout: Callout = {
+    title: 'Empty event pricings',
+    description: '',
+    type: CalloutType.ERROR
+  };
 
   isModalOpen: boolean;
   eventListItemForm: FormGroup;

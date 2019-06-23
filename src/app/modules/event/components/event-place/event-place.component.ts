@@ -33,7 +33,9 @@ export class EventPlaceComponent implements OnInit {
   }
 
   private patchForm(): void {
-    this.eventPlaceForm.patchValue(this.place);
+    if (this.place) {
+      this.eventPlaceForm.patchValue(this.place);
+    }
   }
 
   openModal(): void {
@@ -46,7 +48,7 @@ export class EventPlaceComponent implements OnInit {
   }
 
   updatePlace(): void {
-    this.placeService.updatePlace(this.eventPlaceForm.value)
+    this.placeService.updatePlace({ id: this.place.id, ...this.eventPlaceForm.value })
       .pipe(
         take(1)
       )

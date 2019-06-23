@@ -6,8 +6,6 @@
       <h6>{{ place.name }}</h6>
       <h6>{{ place.address }}</h6>
     </div>
-  </div>
-  <div class="columns">
     <div class="column col-12 col-sm-12 text-right button-group">
       <button
         class="btn btn-success btn-sm"
@@ -15,7 +13,10 @@
       >
         <i class="icon icon-refresh"></i>
       </button>
-      <button class="btn btn-error btn-sm" (click)="deletePlace()">
+      <button
+        class="btn btn-error btn-sm"
+        (click)="deletePlace()"
+      >
         <i class="icon icon-cross"></i>
       </button>
     </div>

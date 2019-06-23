@@ -1,14 +1,5 @@
 @import '~spectre.css/src/variables';
 
-// font-sizes
-$font-size-xxs: $unit-2; // 0.4rem
-$font-size-xs: $unit-3; // 0.6rem
-$font-size-s: $font-size-sm; // 0.7rem
-$font-size-m: $font-size; // 0.8rem
-$font-size-l: $font-size-lg; // 0.9rem
-$font-size-xl: $unit-6; // 1.2rem
-$font-size-xxl: $unit-7; // 1.4rem
-
 // font-families
 $font-family-primary: $base-font-family;
 $font-family-primary-semi-bold: 'OpenSans-SemiBold', -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto;

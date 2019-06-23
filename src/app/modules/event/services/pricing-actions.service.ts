@@ -21,20 +21,22 @@ export class PricingActionsService {
   }
 
   @dispatch()
-  updatePricingDispatch(pricing: Pricing): PricingAction {
+  updatePricingDispatch(eventId: number, pricing: Pricing): PricingAction {
     return {
       type: PricingActionsService.UPDATE_PRICING,
       payload: {
+        eventId,
         pricing
       }
     };
   }
 
   @dispatch()
-  deletePricingDispatch(pricingId: number): PricingAction {
+  deletePricingDispatch(eventId: number, pricingId: number): PricingAction {
     return {
       type: PricingActionsService.DELETE_PRICING,
       payload: {
+        eventId,
         pricingId
       }
     };

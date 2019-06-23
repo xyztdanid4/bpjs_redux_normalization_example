@@ -3,7 +3,7 @@
   <div class="columns">
     <div class="column col-12 col-sm-12 text-right">
       <button
-        class="btn btn-error btn-sm"
+        class="btn btn-error btn-sm delete-button"
         (click)="deleteEvent()"
       >
         <i class="icon icon-cross"></i>
@@ -26,17 +26,30 @@
       </div>
     </div>
     <div class="column col-4 col-sm-12">
-      <app-event-place [place]="event.place"></app-event-place>
+      <app-event-place
+        [place]="event.place"
+        *ngIf="event.place"
+      ></app-event-place>
+      <app-callout
+        [callout]="emptyPlaceCallout"
+        *ngIf="!event.place"
+      ></app-callout>
     </div>
     <div class="column col-4 col-sm-12">
-      <app-event-pricing
-        *ngFor="let pricing of event.pricings"
-        [pricing]="pricing"
-      ></app-event-pricing>
+      <ng-container *ngIf="event.pricings.length >= 0">
+        <app-event-pricing
+          *ngFor="let pricing of event.pricings"
+          [pricing]="pricing"
+          [eventId]="event.id"
+        ></app-event-pricing>
+      </ng-container>
+      <app-callout
+        [callout]="emptyPricingCallout"
+        *ngIf="event.pricings.length === 0"
+      ></app-callout>
     </div>
   </div>
 </div>
-
 
 <!-- MODAL -->
 <div

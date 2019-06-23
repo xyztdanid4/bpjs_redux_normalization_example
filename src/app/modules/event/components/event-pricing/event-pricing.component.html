@@ -1,13 +1,11 @@
 <!-- CONTENT -->
 <div class="container">
-  <div class="columns">
+  <div class="columns" *ngIf="pricing">
     <div class="column col-12">
       <h4 class="underline">Pricing</h4>
       <h6>{{ pricing.name }}</h6>
       <h6>{{ pricing.price }}</h6>
     </div>
-  </div>
-  <div class="columns">
     <div class="column col-12 col-sm-12 text-right button-group">
       <button
         class="btn btn-success btn-sm"
@@ -16,7 +14,10 @@
         <i class="icon icon-refresh"></i>
       </button>
       <button class="btn btn-error btn-sm">
-        <i class="icon icon-cross"></i>
+        <i
+          class="icon icon-cross"
+          (click)="deletePricing()"
+        ></i>
       </button>
     </div>
   </div>
@@ -83,7 +84,10 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-success btn-sm">
+      <button
+        class="btn btn-success btn-sm"
+        (click)=updatePricing()
+      >
         <i class="icon icon-check"></i>
       </button>
     </div>

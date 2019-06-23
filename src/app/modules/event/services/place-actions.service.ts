@@ -13,7 +13,7 @@ export class PlaceActionsService {
   @dispatch()
   createPlaceDispatch(place: Place): PlaceAction {
     return {
-      type: PlaceActionsService.UPDATE_PLACE,
+      type: PlaceActionsService.CREATE_PLACE,
       payload: {
         place
       }

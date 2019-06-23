@@ -13,7 +13,7 @@ export class PricingService {
     private pricingActionsService: PricingActionsService
   ) { }
 
-  createPlace(pricing: Pricing): Observable<Response> {
+  createPricing(pricing: Pricing): Observable<Response> {
     return this.pricingSourceService.createPricing(pricing)
       .pipe(
         take(1),
@@ -21,19 +21,19 @@ export class PricingService {
       );
   }
 
-  updatePlace(pricing: Pricing): Observable<Response> {
+  updatePricing(eventId: number, pricing: Pricing): Observable<Response> {
     return this.pricingSourceService.updatePricing(pricing)
       .pipe(
         take(1),
-        tap(() => this.pricingActionsService.updatePricingDispatch(pricing))
+        tap(() => this.pricingActionsService.updatePricingDispatch(eventId, pricing))
       );
   }
 
-  deletePlace(pricingId: number): Observable<Response> {
+  deletePricing(eventId: number, pricingId: number): Observable<Response> {
     return this.pricingSourceService.deletePricing(pricingId)
       .pipe(
         take(1),
-        tap(() => this.pricingActionsService.deletePricingDispatch(pricingId))
+        tap(() => this.pricingActionsService.deletePricingDispatch(eventId, pricingId))
       );
   }
 

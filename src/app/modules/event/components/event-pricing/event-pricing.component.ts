@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Pricing } from '@modules/event/models/pricing.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { PricingService } from '@modules/event/services/pricing.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-pricing',
@@ -13,9 +15,11 @@ export class EventPricingComponent implements OnInit {
   eventPricingForm: FormGroup;
 
   @Input() readonly pricing: Pricing;
+  @Input() readonly eventId: number;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private pricingService: PricingService
   ) { }
 
   ngOnInit(): void {
@@ -43,7 +47,19 @@ export class EventPricingComponent implements OnInit {
   }
 
   updatePricing(): void {
-    alert('method not implemented');
+    this.pricingService.updatePricing(this.eventId, { ...this.eventPricingForm.value, id: this.pricing.id })
+      .pipe(
+        take(1)
+      )
+      .subscribe();
+  }
+
+  deletePricing(): void {
+    this.pricingService.deletePricing(this.eventId, this.pricing.id)
+      .pipe(
+        take(1)
+      )
+      .subscribe();
   }
 
 }
