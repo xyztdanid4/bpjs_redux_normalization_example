@@ -1,0 +1,18 @@
+@import 'variables/colors';
+
+:host {
+  display: block;
+
+  .event-list-item {
+    padding: 10px 15px;
+    border: solid 1px $lighter-gray;
+    border-radius: 4px;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.05);
+    transition: border-color 200ms ease-in-out, background-color 200ms ease-in-out;
+
+    &:hover {
+      border-color: $light-gray;
+      background-color: $lighter-gray;
+    }
+  }
+}

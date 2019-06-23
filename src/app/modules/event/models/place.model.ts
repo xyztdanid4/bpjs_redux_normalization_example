@@ -1,7 +1,8 @@
 import { IPlace } from '../interfaces/place.interface';
 
 export class Place implements IPlace {
-  readonly id: number;
+
+  readonly id?: number;
   readonly name: string;
   readonly address: string;
 
@@ -10,4 +11,5 @@ export class Place implements IPlace {
     this.name = iPlace.name;
     this.address = iPlace.address;
   }
+
 }

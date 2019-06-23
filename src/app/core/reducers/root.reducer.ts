@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
+import { Event } from '../../modules/event/models/event.model';
+import { EventReducer } from './event.reducer';
 
-// tslint:disable-next-line:no-empty-interface
 export interface IAppState {
-
+  events?: Event[];
 }
 
 export const rootReducer = combineReducers({
-
+  events: EventReducer
 });

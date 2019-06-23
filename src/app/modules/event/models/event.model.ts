@@ -4,6 +4,7 @@ import { Pricing } from './pricing.model';
 import { IPricing } from '../interfaces/pricing.interface';
 
 export class Event implements IEvent {
+
   readonly id: number;
   readonly name: string;
   readonly place: Place;
@@ -15,4 +16,5 @@ export class Event implements IEvent {
     this.place = new Place(iEvent.place);
     this.pricings = iEvent.pricings.map((iPricing: IPricing) => new Pricing(iPricing));
   }
+
 }

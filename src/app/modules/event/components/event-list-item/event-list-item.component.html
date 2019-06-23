@@ -1,0 +1,96 @@
+<!-- CONTENT -->
+<div class="container event-list-item">
+  <div class="columns">
+    <div class="column col-12 col-sm-12 text-right">
+      <button
+        class="btn btn-error btn-sm"
+        (click)="deleteEvent()"
+      >
+        <i class="icon icon-cross"></i>
+      </button>
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column col-4 col-sm-12">
+      <h4 class="underline">Event</h4>
+      <h6>{{ event.name }}</h6>
+      <div class="columns">
+        <div class="column col-12 col-sm-12 text-right">
+          <button
+            class="btn btn-success btn-sm"
+            (click)="openModal()"
+          >
+            <i class="icon icon-refresh"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="column col-4 col-sm-12">
+      <app-event-place [place]="event.place"></app-event-place>
+    </div>
+    <div class="column col-4 col-sm-12">
+      <app-event-pricing
+        *ngFor="let pricing of event.pricings"
+        [pricing]="pricing"
+      ></app-event-pricing>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL -->
+<div
+  class="modal"
+  [class.active]="isModalOpen"
+  id="modal-id"
+>
+  <a
+    class="modal-overlay"
+    aria-label="Close"
+    (click)="closeModal()"
+  ></a>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button
+        class="btn btn-clear float-right"
+        (click)="closeModal()"
+      ></button>
+      <div class="modal-title h5">Event</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        <form
+          novaliadate
+          autocomplete="off"
+          [formGroup]="eventListItemForm"
+        >
+          <div class="form-group">
+            <label
+              class="form-label"
+              for="name"
+            >
+              Name
+            </label>
+            <input
+              class="form-input"
+              type="text"
+              id="name"
+              placeholder="Name"
+              formControlName="name"
+              autocomplete="off"
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="submit"
+        class="btn btn-success btn-sm"
+        (click)="updateEvent()"
+      >
+        <i class="icon icon-check"></i>
+      </button>
+    </div>
+  </div>
+</div>

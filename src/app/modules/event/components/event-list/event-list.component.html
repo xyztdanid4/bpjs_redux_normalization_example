@@ -1,0 +1,21 @@
+<div class="container page-component-container grid-lg">
+  <ng-container *ngIf="!isLoading">
+    <div class="columns">
+      <div class="column col-12">
+        <h2>Events</h2>
+      </div>
+    </div>
+    <div class="columns">
+      <div
+        class="column col-12 col-sm-12"
+        *ngFor="let event of events"
+      >
+        <app-event-list-item [event]="event"></app-event-list-item>
+      </div>
+    </div>
+  </ng-container>
+  <div
+    class="loading loading-lg"
+    *ngIf="isLoading"
+  ></div>
+</div>

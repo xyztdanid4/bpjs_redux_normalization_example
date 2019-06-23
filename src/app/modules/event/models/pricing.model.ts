@@ -1,7 +1,8 @@
 import { IPricing } from '../interfaces/pricing.interface';
 
 export class Pricing implements IPricing {
-  readonly id: number;
+
+  readonly id?: number;
   readonly name: string;
   readonly price: number;
 
@@ -10,4 +11,5 @@ export class Pricing implements IPricing {
     this.name = iPricing.name;
     this.price = iPricing.price;
   }
+
 }

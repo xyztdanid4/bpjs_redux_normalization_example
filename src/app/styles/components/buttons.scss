@@ -1,84 +1,13 @@
 @import '~spectre.css/src/buttons';
 
-.btn {
-  display: inline-flex;
-  height: 48px;
-  align-items: center;
-  justify-content: center;
-  padding-right: 23px;
-  padding-left: 23px;
-  border: none;
-  background-color: $light-blue;
-  border-radius: 2px;
-  color: $primary-color;
-  font-family: $font-family-primary;
-  letter-spacing: 0.75px;
-
-  &:focus, &:hover {
-    background-color: darken($light-blue, 5%);
-    color: $primary-color;
-  }
-}
-
-.btn.btn-primary {
-  background-color: $primary-color;
-  color: $lighter-blue;
-
-  &:focus, &:hover {
-    background-color: darken($primary-color, 5%);
-    color: $lighter-blue;
-  }
-}
-
-.btn.btn-link {
-  border: 1px solid $secondary-color;
-  background-color: transparent;
-  color: $primary-color;
-  font-family: $font-family-primary;
-
-  &:focus, &:hover {
-    background-color: rgba(0, 0, 0, 0.02);
-    color: $primary-color;
-  }
-}
-
-.btn.btn-sm {
-  height: 36px;
-}
-
-.btn.btn-lg {
-  height: 56px;
-  border-radius: 28px;
-}
-
-.btn.btn-buy {
-  width: auto;
-  height: auto;
-  padding: 2px 20px;
-  border: solid 1px;
-  border-radius: 2px;
-  font-size: 14px;
-
-  &.btn-buy-primary {
-    background-color: transparent;
-    color: $primary-color;
-
-    &:hover {
-      background-color: $primary-color;
-      color: $white;
-    }
+.button-group {
+  .btn {
+    margin-left: 3px;
   }
 
-  &.btn-buy-secondary {
-    background-color: transparent;
-    color: $white;
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.9);
-      color: $primary-color;
-    }
+  div .btn {
+    margin-left: 3px;
   }
-
 }
 
 @media screen and (max-width: $size-sm) {
@@ -90,6 +19,7 @@
     div .btn {
       margin-top: 3px;
       margin-bottom: 3px;
+      margin-left: 0;
     }
   }
 }

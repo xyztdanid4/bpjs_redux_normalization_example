@@ -1,5 +1,5 @@
 export interface IPlace {
-  id: number;
+  id?: number;
   name: string;
   address: string;
 }
