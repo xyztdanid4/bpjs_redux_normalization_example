@@ -6,7 +6,7 @@ export const AppRoutes: Routes = [
   {
     path: '',
     component: AppSkeletonRouterComponent,
-    loadChildren: 'app/modules/app-skeleton/app-skeleton.module#AppSkeletonModule'
+    loadChildren: () => import('app/modules/app-skeleton/app-skeleton.module').then(m => m.AppSkeletonModule)
   },
   {
     path: '**',
