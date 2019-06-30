@@ -13,7 +13,7 @@
   <div class="columns">
     <div class="column col-4 col-sm-12">
       <h4 class="underline">Event</h4>
-      <h6>{{ event.name }}</h6>
+      <h6>{{ eventListItem.name }}</h6>
       <div class="columns">
         <div class="column col-12 col-sm-12 text-right">
           <button
@@ -27,25 +27,30 @@
     </div>
     <div class="column col-4 col-sm-12">
       <app-event-place
-        [place]="event.place"
-        *ngIf="event.place"
+        [eventId]="eventListItem.id"
+        [placeId]="eventListItem.place"
+        *ngIf="eventListItem.place"
+        [@deleteAnimation]
       ></app-event-place>
       <app-callout
         [callout]="emptyPlaceCallout"
-        *ngIf="!event.place"
+        *ngIf="!eventListItem.place"
+        [@calloutRevealAnimation]
       ></app-callout>
     </div>
     <div class="column col-4 col-sm-12">
-      <ng-container *ngIf="event.pricings.length >= 0">
+      <ng-container *ngIf="eventListItem.pricings.length >= 0">
         <app-event-pricing
-          *ngFor="let pricing of event.pricings; trackBy: trackByFn"
-          [pricing]="pricing"
-          [eventId]="event.id"
+          *ngFor="let pricingId of eventListItem.pricings; trackBy: trackByFn"
+          [eventId]="eventListItem.id"
+          [pricingId]="pricingId"
+          [@deleteAnimation]
         ></app-event-pricing>
       </ng-container>
       <app-callout
         [callout]="emptyPricingCallout"
-        *ngIf="event.pricings.length === 0"
+        *ngIf="eventListItem.pricings.length === 0"
+        [@calloutRevealAnimation]
       ></app-callout>
     </div>
   </div>

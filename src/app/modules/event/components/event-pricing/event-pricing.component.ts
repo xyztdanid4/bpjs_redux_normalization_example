@@ -1,8 +1,10 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Pricing } from '@modules/event/models/pricing.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PricingService } from '@modules/event/services/pricing/pricing.service';
-import { take, finalize } from 'rxjs/operators';
+import { take, finalize, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { PricingActionsService } from '@modules/event/services/pricing/pricing-actions.service';
 
 @Component({
   selector: 'app-event-pricing',
@@ -10,21 +12,42 @@ import { take, finalize } from 'rxjs/operators';
   styleUrls: ['./event-pricing.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EventPricingComponent implements OnInit {
+export class EventPricingComponent implements OnInit, OnDestroy {
+
+  private readonly destroy$ = new Subject<void>();
 
   isModalOpen: boolean;
   eventPricingForm: FormGroup;
+  pricing: Pricing;
 
-  @Input() readonly pricing: Pricing;
+  @Input() readonly pricingId: number;
   @Input() readonly eventId: number;
 
   constructor(
     private formBuilder: FormBuilder,
-    private pricingService: PricingService
+    private pricingService: PricingService,
+    private pricingActionsService: PricingActionsService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
+    this.subscribeToPricing();
     this.eventPricingForm = this.createForm();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private subscribeToPricing(): void {
+    this.pricingActionsService.getPricing(this.pricingId)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: (pricing: Pricing) => this.pricing = pricing
+      });
   }
 
   private createForm(): FormGroup {
@@ -45,6 +68,7 @@ export class EventPricingComponent implements OnInit {
 
   closeModal(): void {
     this.isModalOpen = false;
+    this.cdr.detectChanges();
   }
 
   updatePricing(): void {
@@ -52,11 +76,7 @@ export class EventPricingComponent implements OnInit {
       return;
     }
 
-    this.pricingService.updatePricing(
-      this.eventId, {
-        ...this.eventPricingForm.value,
-        id: this.pricing.id
-      })
+    this.pricingService.updatePricing(this.eventId, { ...this.eventPricingForm.value, id: this.pricing.id })
       .pipe(
         take(1),
         finalize(() => this.closeModal())

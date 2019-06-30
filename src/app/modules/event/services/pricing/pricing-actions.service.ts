@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { dispatch } from '@angular-redux/store';
+import { dispatch, NgRedux } from '@angular-redux/store';
 import { Pricing } from '../../models/pricing.model';
 import { PricingAction } from '../../models/pricing-action.model';
+import { IAppState } from '@core/reducers/root.reducer';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class PricingActionsService {
@@ -9,6 +11,10 @@ export class PricingActionsService {
   static readonly CREATE_PRICING: string = 'PRICING_CREATE_PRICING';
   static readonly UPDATE_PRICING: string = 'PRICING_UPDATE_PRICING';
   static readonly DELETE_PRICING: string = 'PRICING_DELETE_PRICING';
+
+  constructor(
+    private ngRedux: NgRedux<IAppState>
+  ) { }
 
   @dispatch()
   createPricingDispatch(pricing: Pricing): PricingAction {
@@ -40,5 +46,9 @@ export class PricingActionsService {
         pricingId
       }
     };
+  }
+
+  getPricing(pricingId: number): Observable<Pricing> {
+    return this.ngRedux.select(['pricing', `${pricingId}`]);
   }
 }

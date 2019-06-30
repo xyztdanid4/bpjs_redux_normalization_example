@@ -21,19 +21,19 @@ export class PlaceService {
       );
   }
 
-  updatePlace(place: Place): Observable<Response> {
+  updatePlace(place: Place, eventId: number): Observable<Response> {
     return this.placeSourceService.updatePlace(place)
       .pipe(
         take(1),
-        tap(() => this.placeActionsService.updatePlaceDispatch(place))
+        tap(() => this.placeActionsService.updatePlaceDispatch(place, eventId))
       );
   }
 
-  deletePlace(placeId: number): Observable<Response> {
+  deletePlace(placeId: number, eventId: number): Observable<Response> {
     return this.placeSourceService.deletePlace(placeId)
       .pipe(
         take(1),
-        tap(() => this.placeActionsService.deletePlaceDispatch(placeId))
+        tap(() => this.placeActionsService.deletePlaceDispatch(placeId, eventId))
       );
   }
 

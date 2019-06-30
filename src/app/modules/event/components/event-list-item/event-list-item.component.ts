@@ -1,36 +1,25 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Event } from '../../models/event.model';
-import { take, finalize } from 'rxjs/operators';
+import { take, finalize, takeUntil } from 'rxjs/operators';
 import { Callout } from '@shared/models/callout/callout.model';
 import { CalloutType } from '@shared/enums/callout-type.enum';
 import { EventService } from '@modules/event/services/event/event.service';
-// import { style, trigger, transition, animate } from '@angular/animations';
+import { EventListItem } from '@modules/event/models/event-list-item.model';
+import { EventActionsService } from '@modules/event/services/event/event-actions.service';
+import { Subject } from 'rxjs';
+import { deleteAnimation } from '@shared/animations/delete.animation';
+import { calloutRevealAnimation } from '@shared/animations/callout-reveal.animation';
 
 @Component({
   selector: 'app-event-list-item',
   templateUrl: './event-list-item.component.html',
   styleUrls: ['./event-list-item.component.scss'],
-  // animations: [
-  //   trigger('items', [
-  //     transition(':enter', [
-  //       style({ transform: 'scale(0.5)', opacity: 0 }),  // initial
-  //       animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)',
-  //         style({ transform: 'scale(1)', opacity: 1 }))  // final
-  //     ]),
-  //     transition(':leave', [
-  //       style({ transform: 'scale(1)', opacity: 1, height: '*' }),
-  //       animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)',
-  //         style({
-  //           transform: 'translateY(-100%)', opacity: 0,
-  //           height: '0px', margin: '0px'
-  //         }))
-  //     ])
-  //   ])
-  // ],
+  animations: [deleteAnimation, calloutRevealAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EventListItemComponent implements OnInit {
+export class EventListItemComponent implements OnInit, OnDestroy {
+
+  private readonly destroy$ = new Subject<void>();
 
   readonly emptyPlaceCallout: Callout = {
     title: 'Empty event place',
@@ -46,16 +35,38 @@ export class EventListItemComponent implements OnInit {
 
   isModalOpen: boolean;
   eventListItemForm: FormGroup;
+  eventListItem: EventListItem;
 
-  @Input() readonly event: Event;
+  @Input() readonly eventId: number;
 
   constructor(
     private formBuilder: FormBuilder,
-    private eventService: EventService
+    private eventService: EventService,
+    private eventActionsService: EventActionsService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
+    this.subscribeToEvent();
     this.eventListItemForm = this.createForm();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private subscribeToEvent(): void {
+    this.eventActionsService.getEvent(this.eventId)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: (eventListItem: EventListItem) => {
+          this.eventListItem = eventListItem;
+          this.cdr.markForCheck();
+        }
+      });
   }
 
   private createForm(): FormGroup {
@@ -65,7 +76,7 @@ export class EventListItemComponent implements OnInit {
   }
 
   private patchForm(): void {
-    this.eventListItemForm.patchValue({ name: this.event.name });
+    this.eventListItemForm.patchValue({ name: this.eventListItem.name });
   }
 
   openModal(): void {
@@ -75,6 +86,7 @@ export class EventListItemComponent implements OnInit {
 
   closeModal(): void {
     this.isModalOpen = false;
+    this.cdr.detectChanges();
   }
 
   updateEvent(): void {
@@ -83,7 +95,7 @@ export class EventListItemComponent implements OnInit {
     }
 
     this.eventService.updateEvent({
-      id: this.event.id,
+      ...this.eventListItem,
       ...this.eventListItemForm.value
     })
       .pipe(
@@ -94,15 +106,15 @@ export class EventListItemComponent implements OnInit {
   }
 
   deleteEvent(): void {
-    this.eventService.deleteEvent(this.event.id)
+    this.eventService.deleteEvent(this.eventListItem)
       .pipe(
         take(1)
       )
       .subscribe();
   }
 
-  trackByFn(index: number): number {
-    return index;
+  trackByFn(index: number, item: number): number {
+    return item;
   }
 
 }

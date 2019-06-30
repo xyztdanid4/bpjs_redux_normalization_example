@@ -9,19 +9,21 @@
   </div>
   <div
     class="columns"
-    *ngIf="events.length > 0"
+    *ngIf="eventList.length > 0"
     [@listItemRevealAnimation]
   >
     <div
       class="column col-12 col-sm-12 animate"
-      *ngFor="let event of events; trackBy: trackByFn"
+      *ngFor="let eventId of eventList; trackBy: trackByFn"
+      [@deleteAnimation]
     >
-      <app-event-list-item [event]="event"></app-event-list-item>
+      <app-event-list-item [eventId]="eventId"></app-event-list-item>
     </div>
   </div>
   <app-callout
     [callout]="emptyEventsCallout"
-    *ngIf="events.length === 0"
+    *ngIf="eventList.length === 0"
+    [@calloutRevealAnimation]
   ></app-callout>
 </div>
 

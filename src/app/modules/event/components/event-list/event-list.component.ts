@@ -1,18 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { take, finalize, takeUntil } from 'rxjs/operators';
-import { Event } from '../../models/event.model';
 import { Subject } from 'rxjs';
 import { Callout } from '@shared/models/callout/callout.model';
 import { CalloutType } from '@shared/enums/callout-type.enum';
 import { listItemRevealAnimation } from '@shared/animations/list-item-reveal.animation';
 import { EventService } from '@modules/event/services/event/event.service';
 import { EventActionsService } from '@modules/event/services/event/event-actions.service';
+import { deleteAnimation } from '@shared/animations/delete.animation';
+import { calloutRevealAnimation } from '@shared/animations/callout-reveal.animation';
 
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
   styleUrls: ['./event-list.component.scss'],
-  animations: [listItemRevealAnimation]
+  animations: [listItemRevealAnimation, deleteAnimation, calloutRevealAnimation]
 })
 export class EventListComponent implements OnInit, OnDestroy {
 
@@ -26,7 +27,7 @@ export class EventListComponent implements OnInit, OnDestroy {
 
   isError: boolean;
   isLoading: boolean;
-  events: Event[];
+  eventList: number[];
 
   constructor(
     private eventService: EventService,
@@ -35,7 +36,7 @@ export class EventListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fetchEvents();
-    this.subscribeToEvents();
+    this.subscribeToEventList();
   }
 
   ngOnDestroy(): void {
@@ -55,18 +56,18 @@ export class EventListComponent implements OnInit, OnDestroy {
       });
   }
 
-  private subscribeToEvents(): void {
-    this.eventActionsService.getEvents()
+  private subscribeToEventList(): void {
+    this.eventActionsService.getEventList()
       .pipe(
         takeUntil(this.destroy$)
       )
       .subscribe({
-        next: (events: Event[]) => this.events = events
+        next: (eventList: number[]) => this.eventList = eventList
       });
   }
 
-  trackByFn(index: number): number {
-    return index;
+  trackByFn(index: number, item: number): number {
+    return item;
   }
 
 }

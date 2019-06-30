@@ -3,8 +3,8 @@ import { dispatch, NgRedux } from '@angular-redux/store';
 import { Observable } from 'rxjs';
 import { IAppState } from '@core/reducers/root.reducer';
 import { EventAction } from '@modules/event/models/event-action.model';
-import { Event } from '../../models/event.model';
-
+import { EventNormalizedAggregated } from '@modules/event/models/event-normalized-aggregated.model';
+import { EventListItem } from '@modules/event/models/event-list-item.model';
 @Injectable()
 export class EventActionsService {
 
@@ -17,37 +17,35 @@ export class EventActionsService {
   ) { }
 
   @dispatch()
-  storeEventsDispatch(events: Event[]): EventAction {
+  storeEventsDispatch(events: EventNormalizedAggregated): EventAction {
     return {
       type: EventActionsService.STORE_EVENTS,
-      payload: {
-        events
-      }
+      payload: events
     };
   }
 
   @dispatch()
-  updateEventDispatch(event: Event): EventAction {
+  updateEventDispatch(event: EventListItem): EventAction {
     return {
       type: EventActionsService.UPDATE_EVENT,
-      payload: {
-        event
-      }
+      payload: event
     };
   }
 
   @dispatch()
-  deleteEventDispatch(eventId: number): EventAction {
+  deleteEventDispatch(event: EventListItem): EventAction {
     return {
       type: EventActionsService.DELETE_EVENT,
-      payload: {
-        eventId
-      }
+      payload: event
     };
   }
 
-  getEvents(): Observable<Event[]> {
-    return this.ngRedux.select(['events']);
+  getEventList(): Observable<number[]> {
+    return this.ngRedux.select(['eventList']);
+  }
+
+  getEvent(eventId: number): Observable<EventListItem> {
+    return this.ngRedux.select(['eventListItem', `${eventId}`]);
   }
 
 }

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { IEventSource } from '@modules/event/interfaces/event.source.interface';
 import { Observable, of } from 'rxjs';
-import { IEvent } from '@modules/event/interfaces/event.interface';
 import { EVENT_MOCK } from '@modules/event/mocks/event.mock';
 import { delay } from 'rxjs/operators';
-import { Event } from '../../models/event.model';
+import { IEvent } from '@modules/event/interfaces/event.interface';
+import { EventListItem } from '@modules/event/models/event-list-item.model';
 
 @Injectable()
 export class EventSourceService implements IEventSource {
@@ -16,7 +16,7 @@ export class EventSourceService implements IEventSource {
       );
   }
 
-  updateEvent(event: Event): Observable<Response> {
+  updateEvent(event: EventListItem): Observable<Response> {
     return of(new Response())
       .pipe(
         delay(500)
