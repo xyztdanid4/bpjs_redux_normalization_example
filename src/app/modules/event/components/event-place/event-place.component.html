@@ -42,14 +42,20 @@
       ></button>
       <div class="modal-title h5">Place</div>
     </div>
-    <div class="modal-body">
-      <div class="content">
-        <form
-          novaliadate
-          autocomplete="off"
-          [formGroup]="eventPlaceForm"
-        >
-          <div class="form-group">
+    <form
+      novaliadate
+      autocomplete="off"
+      [formGroup]="eventPlaceForm"
+      (ngSubmit)="updatePlace()"
+    >
+      <div class="modal-body">
+        <div class="content">
+
+          <div
+            class="form-group"
+            [class.has-error]="eventPlaceForm.get('name').touched && !eventPlaceForm.get('name').valid"
+            [class.has-success]="eventPlaceForm.get('name').touched && eventPlaceForm.get('name').valid"
+          >
             <label
               class="form-label"
               for="name"
@@ -65,7 +71,11 @@
               autocomplete="off"
             >
           </div>
-          <div class="form-group">
+          <div
+            class="form-group"
+            [class.has-error]="eventPlaceForm.get('address').touched && !eventPlaceForm.get('address').valid"
+            [class.has-success]="eventPlaceForm.get('address').touched && eventPlaceForm.get('address').valid"
+          >
             <label
               class="form-label"
               for="address"
@@ -80,17 +90,16 @@
               formControlName="address"
             >
           </div>
-        </form>
+        </div>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button
-        type="submit"
-        class="btn btn-success btn-sm"
-        (click)="updatePlace()"
-      >
-        <i class="icon icon-check"></i>
-      </button>
-    </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-success btn-sm"
+        >
+          <i class="icon icon-check"></i>
+        </button>
+      </div>
+    </form>
   </div>
 </div>

@@ -1,13 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Pricing } from '@modules/event/models/pricing.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PricingService } from '@modules/event/services/pricing.service';
-import { take } from 'rxjs/operators';
+import { take, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-pricing',
   templateUrl: './event-pricing.component.html',
-  styleUrls: ['./event-pricing.component.scss']
+  styleUrls: ['./event-pricing.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EventPricingComponent implements OnInit {
 
@@ -47,9 +48,18 @@ export class EventPricingComponent implements OnInit {
   }
 
   updatePricing(): void {
-    this.pricingService.updatePricing(this.eventId, { ...this.eventPricingForm.value, id: this.pricing.id })
+    if (!this.eventPricingForm.valid) {
+      return;
+    }
+
+    this.pricingService.updatePricing(
+      this.eventId, {
+        ...this.eventPricingForm.value,
+        id: this.pricing.id
+      })
       .pipe(
-        take(1)
+        take(1),
+        finalize(() => this.closeModal())
       )
       .subscribe();
   }

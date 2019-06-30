@@ -1,21 +1,31 @@
-<div class="container page-component-container grid-lg">
-  <ng-container *ngIf="!isLoading">
-    <div class="columns">
-      <div class="column col-12">
-        <h2>Events</h2>
-      </div>
+<div
+  class="container page-component-container grid-lg"
+  *ngIf="!isLoading"
+>
+  <div class="columns">
+    <div class="column col-12">
+      <h2>Events</h2>
     </div>
-    <div class="columns">
-      <div
-        class="column col-12 col-sm-12"
-        *ngFor="let event of events"
-      >
-        <app-event-list-item [event]="event"></app-event-list-item>
-      </div>
-    </div>
-  </ng-container>
+  </div>
   <div
-    class="loading loading-lg"
-    *ngIf="isLoading"
-  ></div>
+    class="columns"
+    *ngIf="events.length > 0"
+    [@listItemRevealAnimation]
+  >
+    <div
+      class="column col-12 col-sm-12 animate"
+      *ngFor="let event of events; trackBy: trackByFn"
+    >
+      <app-event-list-item [event]="event"></app-event-list-item>
+    </div>
+  </div>
+  <app-callout
+    [callout]="emptyEventsCallout"
+    *ngIf="events.length === 0"
+  ></app-callout>
 </div>
+
+<div
+  class="loading loading-lg loader"
+  *ngIf="isLoading"
+></div>

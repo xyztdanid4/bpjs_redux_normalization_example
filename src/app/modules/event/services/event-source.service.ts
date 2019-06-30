@@ -12,7 +12,7 @@ export class EventSourceService implements IEventSource {
   getEvents(): Observable<IEvent[]> {
     return of(EVENT_MOCK)
       .pipe(
-        delay(500)
+        delay(2000)
       );
   }
 

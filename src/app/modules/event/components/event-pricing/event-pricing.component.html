@@ -1,6 +1,9 @@
 <!-- CONTENT -->
 <div class="container">
-  <div class="columns" *ngIf="pricing">
+  <div
+    class="columns"
+    *ngIf="pricing"
+  >
     <div class="column col-12">
       <h4 class="underline">Pricing</h4>
       <h6>{{ pricing.name }}</h6>
@@ -42,14 +45,20 @@
       ></button>
       <div class="modal-title h5">Pricing</div>
     </div>
-    <div class="modal-body">
-      <div class="content">
-        <form
-          novaliadate
-          autocomplete="off"
-          [formGroup]="eventPricingForm"
-        >
-          <div class="form-group">
+    <form
+      novaliadate
+      autocomplete="off"
+      [formGroup]="eventPricingForm"
+      (ngSubmit)="updatePricing()"
+    >
+      <div class="modal-body">
+        <div class="content">
+
+          <div
+            class="form-group"
+            [class.has-error]="eventPricingForm.get('name').touched && !eventPricingForm.get('name').valid"
+            [class.has-success]="eventPricingForm.get('name').touched && eventPricingForm.get('name').valid"
+          >
             <label
               class="form-label"
               for="name"
@@ -65,7 +74,11 @@
               autocomplete="off"
             >
           </div>
-          <div class="form-group">
+          <div
+            class="form-group"
+            [class.has-error]="eventPricingForm.get('price').touched && !eventPricingForm.get('price').valid"
+            [class.has-success]="eventPricingForm.get('price').touched && eventPricingForm.get('price').valid"
+          >
             <label
               class="form-label"
               for="address"
@@ -80,16 +93,14 @@
               formControlName="price"
             >
           </div>
-        </form>
+
+        </div>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button
-        class="btn btn-success btn-sm"
-        (click)=updatePricing()
-      >
-        <i class="icon icon-check"></i>
-      </button>
-    </div>
+      <div class="modal-footer">
+        <button class="btn btn-success btn-sm">
+          <i class="icon icon-check"></i>
+        </button>
+      </div>
+    </form>
   </div>
 </div>

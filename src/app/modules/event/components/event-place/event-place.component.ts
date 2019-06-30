@@ -1,13 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Place } from '@modules/event/models/place.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PlaceService } from '@modules/event/services/place.service';
-import { take } from 'rxjs/operators';
+import { take, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-place',
   templateUrl: './event-place.component.html',
-  styleUrls: ['./event-place.component.scss']
+  styleUrls: ['./event-place.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EventPlaceComponent implements OnInit {
 
@@ -48,9 +49,17 @@ export class EventPlaceComponent implements OnInit {
   }
 
   updatePlace(): void {
-    this.placeService.updatePlace({ id: this.place.id, ...this.eventPlaceForm.value })
+    if (!this.eventPlaceForm.valid) {
+      return;
+    }
+
+    this.placeService.updatePlace({
+      id: this.place.id,
+      ...this.eventPlaceForm.value
+    })
       .pipe(
-        take(1)
+        take(1),
+        finalize(() => this.closeModal())
       )
       .subscribe();
   }

@@ -1,14 +1,20 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html
+  class="no-js"
+  lang="en"
+>
 
-<head>
-  <title>BudapestJS</title>
-  <base href="/">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <title>BudapestJS</title>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    >
 
-  <!-- inline spinner styles to be able to display spinner right away -->
-  <style type="text/css">
+    <!-- inline spinner styles to be able to display spinner right away -->
+    <style type="text/css">
     body,
     html {
       height: 100%;
@@ -72,6 +78,10 @@
       stroke-linecap: round;
     }
 
+    img {
+      height: 50px;
+    }
+
     @keyframes rotate {
       100% {
         transform: rotate(360deg);
@@ -95,20 +105,20 @@
       }
     }
   </style>
-</head>
+  </head>
 
-<body>
-  <app-router>
-    <div class="container">
-      <!-- loading layout replaced by app after startup -->
-      <div class="app-loading">
-        <h1 class="logo">i<span>t</span></h1>
-        <svg class="spinner" viewBox="25 25 50 50">
-          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
-        </svg>
+  <body>
+    <app-router>
+      <div class="container">
+        <!-- loading layout replaced by app after startup -->
+        <div class="app-loading">
+          <img
+            src="assets/logo.svg"
+            alt="Logo"
+          >
+        </div>
       </div>
-    </div>
-  </app-router>
-</body>
+    </app-router>
+  </body>
 
 </html>

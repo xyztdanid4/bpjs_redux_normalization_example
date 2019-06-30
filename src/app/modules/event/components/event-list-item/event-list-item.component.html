@@ -38,7 +38,7 @@
     <div class="column col-4 col-sm-12">
       <ng-container *ngIf="event.pricings.length >= 0">
         <app-event-pricing
-          *ngFor="let pricing of event.pricings"
+          *ngFor="let pricing of event.pricings; trackBy: trackByFn"
           [pricing]="pricing"
           [eventId]="event.id"
         ></app-event-pricing>
@@ -70,14 +70,20 @@
       ></button>
       <div class="modal-title h5">Event</div>
     </div>
-    <div class="modal-body">
-      <div class="content">
-        <form
-          novaliadate
-          autocomplete="off"
-          [formGroup]="eventListItemForm"
-        >
-          <div class="form-group">
+    <form
+      novaliadate
+      autocomplete="off"
+      [formGroup]="eventListItemForm"
+      (ngSubmit)="updateEvent()"
+    >
+      <div class="modal-body">
+        <div class="content">
+
+          <div
+            class="form-group"
+            [class.has-error]="eventListItemForm.get('name').touched && !eventListItemForm.get('name').valid"
+            [class.has-success]="eventListItemForm.get('name').touched && eventListItemForm.get('name').valid"
+          >
             <label
               class="form-label"
               for="name"
@@ -93,17 +99,16 @@
               autocomplete="off"
             >
           </div>
-        </form>
+        </div>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button
-        type="submit"
-        class="btn btn-success btn-sm"
-        (click)="updateEvent()"
-      >
-        <i class="icon icon-check"></i>
-      </button>
-    </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-success btn-sm"
+        >
+          <i class="icon icon-check"></i>
+        </button>
+      </div>
+    </form>
   </div>
 </div>
