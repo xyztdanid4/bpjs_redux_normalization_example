@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IPlaceSource } from '../interfaces/place-source.interface';
-import { Place } from '../models/place.model';
+import { IPlaceSource } from '../../interfaces/place-source.interface';
+import { Place } from '../../models/place.model';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 

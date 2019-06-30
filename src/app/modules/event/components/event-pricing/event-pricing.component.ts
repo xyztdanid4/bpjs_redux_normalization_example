@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Pricing } from '@modules/event/models/pricing.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { PricingService } from '@modules/event/services/pricing.service';
+import { PricingService } from '@modules/event/services/pricing/pricing.service';
 import { take, finalize } from 'rxjs/operators';
 
 @Component({

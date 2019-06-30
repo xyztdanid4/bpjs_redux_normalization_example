@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Event } from '../../models/event.model';
-import { EventService } from '@modules/event/services/event.service';
 import { take, finalize } from 'rxjs/operators';
 import { Callout } from '@shared/models/callout/callout.model';
 import { CalloutType } from '@shared/enums/callout-type.enum';
+import { EventService } from '@modules/event/services/event/event.service';
 // import { style, trigger, transition, animate } from '@angular/animations';
 
 @Component({

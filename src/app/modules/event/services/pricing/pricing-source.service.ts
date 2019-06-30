@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IPricingSource } from '../interfaces/pricing-source.interface';
-import { Pricing } from '../models/pricing.model';
+import { IPricingSource } from '../../interfaces/pricing-source.interface';
+import { Pricing } from '../../models/pricing.model';
 import { Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 

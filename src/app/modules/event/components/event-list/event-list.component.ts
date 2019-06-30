@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EventService } from '@modules/event/services/event.service';
 import { take, finalize, takeUntil } from 'rxjs/operators';
 import { Event } from '../../models/event.model';
-import { EventActionsService } from '@modules/event/services/event-actions.service';
 import { Subject } from 'rxjs';
 import { Callout } from '@shared/models/callout/callout.model';
 import { CalloutType } from '@shared/enums/callout-type.enum';
 import { listItemRevealAnimation } from '@shared/animations/list-item-reveal.animation';
+import { EventService } from '@modules/event/services/event/event.service';
+import { EventActionsService } from '@modules/event/services/event/event-actions.service';
 
 @Component({
   selector: 'app-event-list',

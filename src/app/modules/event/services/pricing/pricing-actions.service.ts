@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { dispatch } from '@angular-redux/store';
-import { Pricing } from '../models/pricing.model';
-import { PricingAction } from '../models/pricing-action.model';
+import { Pricing } from '../../models/pricing.model';
+import { PricingAction } from '../../models/pricing-action.model';
 
 @Injectable()
 export class PricingActionsService {

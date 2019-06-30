@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { dispatch, NgRedux } from '@angular-redux/store';
-import { EventAction } from '../models/event-action.model';
-import { Event } from '../models/event.model';
-import { IAppState } from '@core/reducers/root.reducer';
 import { Observable } from 'rxjs';
+import { IAppState } from '@core/reducers/root.reducer';
+import { EventAction } from '@modules/event/models/event-action.model';
+import { Event } from '../../models/event.model';
 
 @Injectable()
 export class EventActionsService {

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { IEventSource } from '../interfaces/event.source.interface';
 import { Observable } from 'rxjs';
-import { Event } from '../models/event.model';
 import { take, map, tap } from 'rxjs/operators';
-import { IEvent } from '../interfaces/event.interface';
 import { EventActionsService } from './event-actions.service';
+import { IEventSource } from '@modules/event/interfaces/event.source.interface';
+import { IEvent } from '@modules/event/interfaces/event.interface';
+import { Event } from '../../models/event.model';
 
 @Injectable()
 export class EventService {

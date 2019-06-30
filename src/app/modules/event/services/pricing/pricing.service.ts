@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { IPricingSource } from '../interfaces/pricing-source.interface';
+import { IPricingSource } from '../../interfaces/pricing-source.interface';
 import { Observable } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { PricingActionsService } from './pricing-actions.service';
-import { Pricing } from '../models/pricing.model';
+import { Pricing } from '../../models/pricing.model';
 
 @Injectable()
 export class PricingService {

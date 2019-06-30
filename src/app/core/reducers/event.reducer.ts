@@ -1,11 +1,11 @@
 import { EventAction } from '@modules/event/models/event-action.model';
-import { EventActionsService } from '@modules/event/services/event-actions.service';
 import { Event } from '../../modules/event/models/event.model';
-import { PlaceActionsService } from '@modules/event/services/place-actions.service';
 import { PlaceAction } from '@modules/event/models/place-action.model';
-import { PricingActionsService } from '@modules/event/services/pricing-actions.service';
 import { PricingAction } from '@modules/event/models/pricing-action.model';
 import { Pricing } from '@modules/event/models/pricing.model';
+import { EventActionsService } from '@modules/event/services/event/event-actions.service';
+import { PlaceActionsService } from '@modules/event/services/place/place-actions.service';
+import { PricingActionsService } from '@modules/event/services/pricing/pricing-actions.service';
 
 function defaultState(): Event[] {
   return null;

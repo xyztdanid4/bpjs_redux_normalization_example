@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IPlaceSource } from '../interfaces/place-source.interface';
-import { Place } from '../models/place.model';
+import { IPlaceSource } from '../../interfaces/place-source.interface';
+import { Place } from '../../models/place.model';
 import { Observable } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { PlaceActionsService } from './place-actions.service';

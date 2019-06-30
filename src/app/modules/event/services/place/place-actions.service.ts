@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { dispatch } from '@angular-redux/store';
-import { PlaceAction } from '../models/place-action.model';
-import { Place } from '../models/place.model';
+import { PlaceAction } from '../../models/place-action.model';
+import { Place } from '../../models/place.model';
 
 @Injectable()
 export class PlaceActionsService {
