@@ -65,8 +65,4 @@ export class EventListComponent implements OnInit, OnDestroy {
       });
   }
 
-  trackByFn(index: number): number {
-    return index;
-  }
-
 }

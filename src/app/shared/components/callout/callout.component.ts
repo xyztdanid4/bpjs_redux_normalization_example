@@ -17,8 +17,4 @@ export class CalloutComponent implements OnInit {
     this.descriptions = Array.isArray(this.callout.description) ? this.callout.description : [this.callout.description];
   }
 
-  trackByFn(index: number): number {
-    return index;
-  }
-
 }

@@ -101,8 +101,4 @@ export class EventListItemComponent implements OnInit {
       .subscribe();
   }
 
-  trackByFn(index: number): number {
-    return index;
-  }
-
 }

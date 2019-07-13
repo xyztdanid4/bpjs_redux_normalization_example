@@ -38,7 +38,7 @@
     <div class="column col-4 col-sm-12">
       <ng-container *ngIf="event.pricings.length >= 0">
         <app-event-pricing
-          *ngFor="let pricing of event.pricings; trackBy: trackByFn"
+          *ngFor="let pricing of event.pricings"
           [pricing]="pricing"
           [eventId]="event.id"
         ></app-event-pricing>
