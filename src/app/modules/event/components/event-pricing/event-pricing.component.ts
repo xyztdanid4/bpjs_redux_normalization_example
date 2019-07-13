@@ -7,8 +7,7 @@ import { take, finalize } from 'rxjs/operators';
 @Component({
   selector: 'app-event-pricing',
   templateUrl: './event-pricing.component.html',
-  styleUrls: ['./event-pricing.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./event-pricing.component.scss']
 })
 export class EventPricingComponent implements OnInit {
 

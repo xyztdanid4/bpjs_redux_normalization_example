@@ -4,8 +4,7 @@ import { Callout } from '@shared/models/callout/callout.model';
 @Component({
   selector: 'app-callout',
   templateUrl: './callout.component.html',
-  styleUrls: ['./callout.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./callout.component.scss']
 })
 export class CalloutComponent implements OnInit {
 
