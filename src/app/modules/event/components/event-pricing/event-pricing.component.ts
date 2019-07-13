@@ -27,7 +27,7 @@ export class EventPricingComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private pricingService: PricingService,
     private pricingActionsService: PricingActionsService,
-    private cdr: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -68,7 +68,7 @@ export class EventPricingComponent implements OnInit, OnDestroy {
 
   closeModal(): void {
     this.isModalOpen = false;
-    this.cdr.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
   updatePricing(): void {

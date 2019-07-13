@@ -43,7 +43,7 @@ export class EventListItemComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private eventService: EventService,
     private eventActionsService: EventActionsService,
-    private cdr: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -64,7 +64,7 @@ export class EventListItemComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (eventListItem: EventListItem) => {
           this.eventListItem = eventListItem;
-          this.cdr.markForCheck();
+          this.changeDetectorRef.markForCheck();
         }
       });
   }
@@ -86,7 +86,7 @@ export class EventListItemComponent implements OnInit, OnDestroy {
 
   closeModal(): void {
     this.isModalOpen = false;
-    this.cdr.detectChanges();
+    this.changeDetectorRef.detectChanges();
   }
 
   updateEvent(): void {
