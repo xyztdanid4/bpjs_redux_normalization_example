@@ -11,8 +11,7 @@ import { EventActionsService } from '@modules/event/services/event/event-actions
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
-  styleUrls: ['./event-list.component.scss'],
-  animations: [listItemRevealAnimation]
+  styleUrls: ['./event-list.component.scss']
 })
 export class EventListComponent implements OnInit, OnDestroy {
 
