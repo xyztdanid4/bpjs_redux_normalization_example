@@ -17,7 +17,7 @@ export function PricingReducer(state = defaultState(), action: EventAction | Pri
       };
     case EventActionsService.DELETE_EVENT:
       return Object.keys(state)
-        .filter((key: string) => action.payload.pricings.includes(String(key)))
+        .filter((key: string) => !action.payload.pricings.includes(+key))
         .reduce((result, current) => {
           result[current] = state[current];
           return result;
