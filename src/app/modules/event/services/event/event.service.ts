@@ -10,6 +10,7 @@ import { Event } from '@modules/event/models/event.model';
 import { EventNormalized } from '@modules/event/models/event-normalized.model';
 import { EventNormalizedAggregated } from '@modules/event/models/event-normalized-aggregated.model';
 import { EventListItem } from '@modules/event/models/event-list-item.model';
+import { EventAction } from '@modules/event/models/event-action.model';
 
 @Injectable()
 export class EventService {
@@ -19,7 +20,7 @@ export class EventService {
     private eventActionsService: EventActionsService
   ) { }
 
-  getEvents(): Observable<any> {
+  getEvents(): Observable<EventNormalizedAggregated> {
     return this.eventSourceService.getEvents()
       .pipe(
         take(1),
