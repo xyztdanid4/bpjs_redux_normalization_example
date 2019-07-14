@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, SimpleChanges, OnChanges } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { take, finalize, takeUntil } from 'rxjs/operators';
+import { take, finalize, takeUntil, switchMap, map } from 'rxjs/operators';
 import { Callout } from '@shared/models/callout/callout.model';
 import { CalloutType } from '@shared/enums/callout-type.enum';
 import { EventService } from '@modules/event/services/event/event.service';
@@ -38,7 +38,6 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
 
   isModalOpen: boolean;
   eventListItemForm: FormGroup;
-  eventListItem: EventListItem;
 
   @Input() readonly eventListItem$: Observable<EventListItem>;
 
@@ -51,7 +50,6 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    this.subscribeToEvent();
     this.eventListItemForm = this.createForm();
   }
 
@@ -69,19 +67,6 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
     return true;
   }
 
-  private subscribeToEvent(): void {
-    this.eventListItem$
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe({
-        next: (eventListItem: EventListItem) => {
-          this.eventListItem = eventListItem;
-          this.changeDetectorRef.markForCheck();
-        }
-      });
-  }
-
   private createForm(): FormGroup {
     return this.formBuilder.group({
       name: [null, [Validators.required]]
@@ -89,11 +74,22 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private patchForm(): void {
-    this.eventListItemForm.patchValue({ name: this.eventListItem.name });
+    this.eventListItem$
+      .pipe(
+        take(1)
+      )
+      .subscribe({
+        next: (eventListItem: EventListItem) => this.eventListItemForm.patchValue({ name: eventListItem.name })
+      });
   }
 
-  getEventPlace(placeId: number): Observable<Place> {
-    return this.placeActionsService.getPlace(placeId);
+  getEventPlace(): Observable<Place> {
+    return this.eventListItem$
+      .pipe(
+        takeUntil(this.destroy$),
+        map((eventListItem: EventListItem) => eventListItem.place),
+        switchMap((placeId: number) => this.placeActionsService.getPlace(placeId))
+      );
   }
 
   getEventPricing(pricingId: number): Observable<Pricing> {
@@ -115,21 +111,22 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
       return;
     }
 
-    this.eventService.updateEvent({
-      ...this.eventListItem,
-      ...this.eventListItemForm.value
-    })
+    this.eventListItem$
       .pipe(
         take(1),
+        switchMap((eventListItem: EventListItem) =>
+          this.eventService.updateEvent({ ...eventListItem, ...this.eventListItemForm.value })),
         finalize(() => this.closeModal())
       )
       .subscribe();
   }
 
   deleteEvent(): void {
-    this.eventService.deleteEvent(this.eventListItem)
+    this.eventListItem$
       .pipe(
-        take(1)
+        take(1),
+        switchMap((eventListItem: EventListItem) =>
+          this.eventService.deleteEvent(eventListItem))
       )
       .subscribe();
   }
