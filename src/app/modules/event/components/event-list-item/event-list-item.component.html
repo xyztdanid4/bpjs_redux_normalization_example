@@ -40,7 +40,7 @@
     <div class="column col-4 col-sm-12">
       <ng-container *ngIf="eventListItem.pricings.length >= 0">
         <app-event-pricing
-          *ngFor="let pricingId of eventListItem.pricings; trackBy: trackByFn"
+          *ngFor="let pricingId of (eventListItem$ | async).pricings; trackBy: trackByFn"
           [eventPricing$]="getEventPricing(pricingId)"
           [@deleteAnimation]
         ></app-event-pricing>

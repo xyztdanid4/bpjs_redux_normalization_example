@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef, SimpleChanges, OnChanges } from '@angular/core';
 import { Place } from '@modules/event/models/place.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { take, finalize, takeUntil } from 'rxjs/operators';
+import { take, finalize, map, switchMap } from 'rxjs/operators';
 import { PlaceService } from '@modules/event/services/place/place.service';
-import { Subject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-event-place',
@@ -11,13 +11,10 @@ import { Subject, Observable } from 'rxjs';
   styleUrls: ['./event-place.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EventPlaceComponent implements OnInit, OnDestroy, OnChanges {
-
-  private readonly destroy$ = new Subject<void>();
+export class EventPlaceComponent implements OnInit, OnChanges {
 
   isModalOpen: boolean;
   eventPlaceForm: FormGroup;
-  place: Place;
 
   @Input() readonly eventPlace$: Observable<Place>;
 
@@ -28,13 +25,7 @@ export class EventPlaceComponent implements OnInit, OnDestroy, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    this.subscribeToPlace();
     this.eventPlaceForm = this.createForm();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -46,15 +37,6 @@ export class EventPlaceComponent implements OnInit, OnDestroy, OnChanges {
     return true;
   }
 
-  private subscribeToPlace(): void {
-    this.eventPlace$.pipe(
-      takeUntil(this.destroy$)
-    )
-      .subscribe({
-        next: (place: Place) => this.place = place
-      });
-  }
-
   private createForm(): FormGroup {
     return this.formBuilder.group({
       name: [null, [Validators.required]],
@@ -63,9 +45,13 @@ export class EventPlaceComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private patchForm(): void {
-    if (this.place) {
-      this.eventPlaceForm.patchValue(this.place);
-    }
+    this.eventPlace$
+      .pipe(
+        take(1)
+      )
+      .subscribe({
+        next: (place: Place) => this.eventPlaceForm.patchValue(place)
+      });
   }
 
   openModal(): void {
@@ -83,18 +69,20 @@ export class EventPlaceComponent implements OnInit, OnDestroy, OnChanges {
       return;
     }
 
-    this.placeService.updatePlace({ id: this.place.id, ...this.eventPlaceForm.value })
+    this.eventPlace$
       .pipe(
         take(1),
+        switchMap((place: Place) => this.placeService.updatePlace({ ...place, ...this.eventPlaceForm.value })),
         finalize(() => this.closeModal())
       )
       .subscribe();
   }
 
   deletePlace(): void {
-    this.placeService.deletePlace(this.place.id, this.place.eventId)
+    this.eventPlace$
       .pipe(
-        take(1)
+        take(1),
+        switchMap((place: Place) => this.placeService.deletePlace(place.id, place.eventId))
       )
       .subscribe();
   }

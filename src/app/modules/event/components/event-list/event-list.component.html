@@ -9,12 +9,12 @@
   </div>
   <div
     class="columns"
-    *ngIf="eventList.length > 0"
+    *ngIf="(getEventList() | async).length > 0"
     [@listItemRevealAnimation]
   >
     <div
       class="column col-12 col-sm-12 animate"
-      *ngFor="let eventId of eventList; trackBy: trackByFn"
+      *ngFor="let eventId of (getEventList() | async); trackBy: trackByFn"
       [@deleteAnimation]
     >
       <app-event-list-item [eventListItem$]="getEventListItem(eventId)"></app-event-list-item>
@@ -22,7 +22,7 @@
   </div>
   <app-callout
     [callout]="emptyEventsCallout"
-    *ngIf="eventList.length === 0"
+    *ngIf="(getEventList() | async).length === 0"
     [@calloutRevealAnimation]
   ></app-callout>
 </div>
@@ -31,3 +31,8 @@
   class="loading loading-lg loader"
   *ngIf="isLoading"
 ></div>
+
+
+<div style="visibility: hidden">
+  {{ runChangeDetection }}
+</div>

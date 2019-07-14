@@ -3,8 +3,8 @@
   <div class="columns">
     <div class="column col-12">
       <h4 class="underline">Place</h4>
-      <h6>{{ place.name }}</h6>
-      <h6>{{ place.address }}</h6>
+      <h6>{{ (eventPlace$ | async).name }}</h6>
+      <h6>{{ (eventPlace$ | async).address }}</h6>
     </div>
     <div class="column col-12 col-sm-12 text-right button-group">
       <button

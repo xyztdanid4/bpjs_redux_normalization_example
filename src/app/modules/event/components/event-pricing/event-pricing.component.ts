@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
 import { Pricing } from '@modules/event/models/pricing.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PricingService } from '@modules/event/services/pricing/pricing.service';
-import { take, finalize, takeUntil } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { take, finalize, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-event-pricing',
@@ -11,13 +11,10 @@ import { Subject, Observable } from 'rxjs';
   styleUrls: ['./event-pricing.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EventPricingComponent implements OnInit, OnDestroy, OnChanges {
-
-  private readonly destroy$ = new Subject<void>();
+export class EventPricingComponent implements OnInit, OnChanges {
 
   isModalOpen: boolean;
   eventPricingForm: FormGroup;
-  pricing: Pricing;
 
   @Input() readonly eventPricing$: Observable<Pricing>;
 
@@ -28,13 +25,7 @@ export class EventPricingComponent implements OnInit, OnDestroy, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    this.subscribeToPricing();
     this.eventPricingForm = this.createForm();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -46,16 +37,6 @@ export class EventPricingComponent implements OnInit, OnDestroy, OnChanges {
     return true;
   }
 
-  private subscribeToPricing(): void {
-    this.eventPricing$
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe({
-        next: (pricing: Pricing) => this.pricing = pricing
-      });
-  }
-
   private createForm(): FormGroup {
     return this.formBuilder.group({
       name: [null, [Validators.required]],
@@ -64,7 +45,13 @@ export class EventPricingComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private patchForm(): void {
-    this.eventPricingForm.patchValue(this.pricing);
+    this.eventPricing$
+      .pipe(
+        take(1)
+      )
+      .subscribe({
+        next: (pricing: Pricing) => this.eventPricingForm.patchValue(pricing)
+      });
   }
 
   openModal(): void {
@@ -82,18 +69,20 @@ export class EventPricingComponent implements OnInit, OnDestroy, OnChanges {
       return;
     }
 
-    this.pricingService.updatePricing({ id: this.pricing.id, ...this.eventPricingForm.value })
+    this.eventPricing$
       .pipe(
         take(1),
+        switchMap((pricing: Pricing) => this.pricingService.updatePricing({ ...pricing, ...this.eventPricingForm.value })),
         finalize(() => this.closeModal())
       )
       .subscribe();
   }
 
   deletePricing(): void {
-    this.pricingService.deletePricing(this.pricing.eventId, this.pricing.id)
+    this.eventPricing$
       .pipe(
-        take(1)
+        take(1),
+        switchMap((pricing: Pricing) => this.pricingService.deletePricing(pricing.eventId, pricing.id))
       )
       .subscribe();
   }

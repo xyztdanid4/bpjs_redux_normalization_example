@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { take, finalize, takeUntil } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Component, OnInit, OnChanges, SimpleChanges  } from '@angular/core';
+import { take, finalize } from 'rxjs/operators';
 import { Callout } from '@shared/models/callout/callout.model';
 import { CalloutType } from '@shared/enums/callout-type.enum';
 import { listItemRevealAnimation } from '@shared/animations/list-item-reveal.animation';
@@ -9,6 +8,7 @@ import { EventActionsService } from '@modules/event/services/event/event-actions
 import { deleteAnimation } from '@shared/animations/delete.animation';
 import { calloutRevealAnimation } from '@shared/animations/callout-reveal.animation';
 import { EventListItem } from '@modules/event/models/event-list-item.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-event-list',
@@ -16,9 +16,7 @@ import { EventListItem } from '@modules/event/models/event-list-item.model';
   styleUrls: ['./event-list.component.scss'],
   animations: [listItemRevealAnimation, deleteAnimation, calloutRevealAnimation]
 })
-export class EventListComponent implements OnInit, OnDestroy {
-
-  private readonly destroy$ = new Subject<void>();
+export class EventListComponent implements OnInit, OnChanges {
 
   readonly emptyEventsCallout: Callout = {
     title: 'Empty events',
@@ -28,7 +26,6 @@ export class EventListComponent implements OnInit, OnDestroy {
 
   isError: boolean;
   isLoading: boolean;
-  eventList: number[];
 
   constructor(
     private eventService: EventService,
@@ -37,12 +34,15 @@ export class EventListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fetchEvents();
-    this.subscribeToEventList();
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('CHANGED', 'EVENT-LIST', changes);
+  }
+
+  get runChangeDetection() {
+    console.log('EVENT-LIST - Checking the view');
+    return true;
   }
 
   private fetchEvents(): void {
@@ -57,14 +57,8 @@ export class EventListComponent implements OnInit, OnDestroy {
       });
   }
 
-  private subscribeToEventList(): void {
-    this.eventActionsService.getEventList()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe({
-        next: (eventList: number[]) => this.eventList = eventList
-      });
+  getEventList(): Observable<number[]> {
+    return this.eventActionsService.getEventList();
   }
 
   getEventListItem(eventId: number): Observable<EventListItem> {

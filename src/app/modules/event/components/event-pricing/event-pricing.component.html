@@ -2,12 +2,11 @@
 <div class="container">
   <div
     class="columns"
-    *ngIf="pricing"
   >
     <div class="column col-12">
       <h4 class="underline">Pricing</h4>
-      <h6>{{ pricing.name }}</h6>
-      <h6>{{ pricing.price }}</h6>
+      <h6>{{ (eventPricing$ | async).name }}</h6>
+      <h6>{{ (eventPricing$ | async).price }}</h6>
     </div>
     <div class="column col-12 col-sm-12 text-right button-group">
       <button
