@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Pricing } from '@modules/event/models/pricing.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PricingService } from '@modules/event/services/pricing/pricing.service';
@@ -9,7 +9,7 @@ import { take, finalize } from 'rxjs/operators';
   templateUrl: './event-pricing.component.html',
   styleUrls: ['./event-pricing.component.scss']
 })
-export class EventPricingComponent implements OnInit {
+export class EventPricingComponent implements OnInit, OnChanges {
 
   isModalOpen: boolean;
   eventPricingForm: FormGroup;
@@ -24,6 +24,15 @@ export class EventPricingComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventPricingForm = this.createForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('CHANGED', 'EVENT-PRICING', changes);
+  }
+
+  get runChangeDetection() {
+    console.log('EVENT-PRICING - Checking the view');
+    return true;
   }
 
   private createForm(): FormGroup {

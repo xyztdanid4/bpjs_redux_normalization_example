@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { Place } from '@modules/event/models/place.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take, finalize } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { PlaceService } from '@modules/event/services/place/place.service';
   templateUrl: './event-place.component.html',
   styleUrls: ['./event-place.component.scss']
 })
-export class EventPlaceComponent implements OnInit {
+export class EventPlaceComponent implements OnInit, OnChanges {
 
   isModalOpen: boolean;
   eventPlaceForm: FormGroup;
@@ -23,6 +23,15 @@ export class EventPlaceComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventPlaceForm = this.createForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('CHANGED', 'EVENT-PLACE', changes);
+  }
+
+  get runChangeDetection() {
+    console.log('EVENT-PLACE - Checking the view');
+    return true;
   }
 
   private createForm(): FormGroup {

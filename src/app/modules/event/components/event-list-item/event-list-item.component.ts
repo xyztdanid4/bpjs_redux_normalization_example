@@ -1,18 +1,17 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Event } from '../../models/event.model';
 import { take, finalize } from 'rxjs/operators';
 import { Callout } from '@shared/models/callout/callout.model';
 import { CalloutType } from '@shared/enums/callout-type.enum';
 import { EventService } from '@modules/event/services/event/event.service';
-// import { style, trigger, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-event-list-item',
   templateUrl: './event-list-item.component.html',
   styleUrls: ['./event-list-item.component.scss']
 })
-export class EventListItemComponent implements OnInit {
+export class EventListItemComponent implements OnInit, OnChanges {
 
   readonly emptyPlaceCallout: Callout = {
     title: 'Empty event place',
@@ -38,6 +37,15 @@ export class EventListItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventListItemForm = this.createForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('CHANGED', 'EVENT-LIST-ITEM', changes);
+  }
+
+  get runChangeDetection() {
+    console.log('EVENT-LIST-ITEM - Checking the view');
+    return true;
   }
 
   private createForm(): FormGroup {
