@@ -27,11 +27,10 @@ export class PricingActionsService {
   }
 
   @dispatch()
-  updatePricingDispatch(eventId: number, pricing: Pricing): PricingAction {
+  updatePricingDispatch(pricing: Pricing): PricingAction {
     return {
       type: PricingActionsService.UPDATE_PRICING,
       payload: {
-        eventId,
         pricing
       }
     };

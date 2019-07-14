@@ -5,6 +5,7 @@ import { IAppState } from '@core/reducers/root.reducer';
 import { EventAction } from '@modules/event/models/event-action.model';
 import { EventNormalizedAggregated } from '@modules/event/models/event-normalized-aggregated.model';
 import { EventListItem } from '@modules/event/models/event-list-item.model';
+
 @Injectable()
 export class EventActionsService {
 

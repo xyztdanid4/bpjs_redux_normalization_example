@@ -21,11 +21,11 @@ export class PlaceService {
       );
   }
 
-  updatePlace(place: Place, eventId: number): Observable<Response> {
+  updatePlace(place: Place): Observable<Response> {
     return this.placeSourceService.updatePlace(place)
       .pipe(
         take(1),
-        tap(() => this.placeActionsService.updatePlaceDispatch(place, eventId))
+        tap(() => this.placeActionsService.updatePlaceDispatch(place))
       );
   }
 

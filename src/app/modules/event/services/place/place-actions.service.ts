@@ -27,11 +27,10 @@ export class PlaceActionsService {
   }
 
   @dispatch()
-  updatePlaceDispatch(place: Place, eventId: number): PlaceAction {
+  updatePlaceDispatch(place: Place): PlaceAction {
     return {
       type: PlaceActionsService.UPDATE_PLACE,
       payload: {
-        eventId,
         place
       }
     };

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { take, finalize, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { Callout } from '@shared/models/callout/callout.model';
 import { CalloutType } from '@shared/enums/callout-type.enum';
 import { listItemRevealAnimation } from '@shared/animations/list-item-reveal.animation';
@@ -8,6 +8,7 @@ import { EventService } from '@modules/event/services/event/event.service';
 import { EventActionsService } from '@modules/event/services/event/event-actions.service';
 import { deleteAnimation } from '@shared/animations/delete.animation';
 import { calloutRevealAnimation } from '@shared/animations/callout-reveal.animation';
+import { EventListItem } from '@modules/event/models/event-list-item.model';
 
 @Component({
   selector: 'app-event-list',
@@ -64,6 +65,10 @@ export class EventListComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (eventList: number[]) => this.eventList = eventList
       });
+  }
+
+  getEventListItem(eventId: number): Observable<EventListItem> {
+    return this.eventActionsService.getEvent(eventId);
   }
 
   trackByFn(index: number, item: number): number {

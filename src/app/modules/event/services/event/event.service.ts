@@ -26,6 +26,7 @@ export class EventService {
         map((iEvents: IEvent[]) => iEvents.map((iEvent: IEvent) => new Event(iEvent))),
         map((events: Event[]) => {
           const normalizedEvents: NormalizedSchema<EventNormalized, number[]> = normalize(events, eventListSchema);
+          console.log(normalizedEvents);
           return {
             ...normalizedEvents.entities,
             events: normalizedEvents.result

@@ -17,7 +17,7 @@
       *ngFor="let eventId of eventList; trackBy: trackByFn"
       [@deleteAnimation]
     >
-      <app-event-list-item [eventId]="eventId"></app-event-list-item>
+      <app-event-list-item [eventListItem$]="getEventListItem(eventId)"></app-event-list-item>
     </div>
   </div>
   <app-callout

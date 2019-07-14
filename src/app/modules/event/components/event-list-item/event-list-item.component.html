@@ -27,14 +27,13 @@
     </div>
     <div class="column col-4 col-sm-12">
       <app-event-place
-        [eventId]="eventListItem.id"
-        [placeId]="eventListItem.place"
-        *ngIf="eventListItem.place"
+        [eventPlace$]="getEventPlace(eventListItem.place)"
+        *ngIf="getEventPlace(eventListItem.place) | async"
         [@deleteAnimation]
       ></app-event-place>
       <app-callout
         [callout]="emptyPlaceCallout"
-        *ngIf="!eventListItem.place"
+        *ngIf="!(getEventPlace(eventListItem.place) | async)"
         [@calloutRevealAnimation]
       ></app-callout>
     </div>
@@ -42,8 +41,7 @@
       <ng-container *ngIf="eventListItem.pricings.length >= 0">
         <app-event-pricing
           *ngFor="let pricingId of eventListItem.pricings; trackBy: trackByFn"
-          [eventId]="eventListItem.id"
-          [pricingId]="pricingId"
+          [eventPricing$]="getEventPricing(pricingId)"
           [@deleteAnimation]
         ></app-event-pricing>
       </ng-container>
@@ -116,4 +114,9 @@
       </div>
     </form>
   </div>
+</div>
+
+
+<div style="visibility: hidden">
+  {{ runChangeDetection }}
 </div>

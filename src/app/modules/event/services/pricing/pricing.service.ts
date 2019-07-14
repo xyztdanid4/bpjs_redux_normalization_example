@@ -21,11 +21,11 @@ export class PricingService {
       );
   }
 
-  updatePricing(eventId: number, pricing: Pricing): Observable<Response> {
+  updatePricing(pricing: Pricing): Observable<Response> {
     return this.pricingSourceService.updatePricing(pricing)
       .pipe(
         take(1),
-        tap(() => this.pricingActionsService.updatePricingDispatch(eventId, pricing))
+        tap(() => this.pricingActionsService.updatePricingDispatch(pricing))
       );
   }
 

@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
 import { Pricing } from '@modules/event/models/pricing.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PricingService } from '@modules/event/services/pricing/pricing.service';
 import { take, finalize, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { PricingActionsService } from '@modules/event/services/pricing/pricing-actions.service';
+import { Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-event-pricing',
@@ -12,7 +11,7 @@ import { PricingActionsService } from '@modules/event/services/pricing/pricing-a
   styleUrls: ['./event-pricing.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EventPricingComponent implements OnInit, OnDestroy {
+export class EventPricingComponent implements OnInit, OnDestroy, OnChanges {
 
   private readonly destroy$ = new Subject<void>();
 
@@ -20,13 +19,11 @@ export class EventPricingComponent implements OnInit, OnDestroy {
   eventPricingForm: FormGroup;
   pricing: Pricing;
 
-  @Input() readonly pricingId: number;
-  @Input() readonly eventId: number;
+  @Input() readonly eventPricing$: Observable<Pricing>;
 
   constructor(
     private formBuilder: FormBuilder,
     private pricingService: PricingService,
-    private pricingActionsService: PricingActionsService,
     private changeDetectorRef: ChangeDetectorRef
   ) { }
 
@@ -40,8 +37,17 @@ export class EventPricingComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('CHANGED', 'EVENT-PRICING', changes);
+  }
+
+  get runChangeDetection() {
+    console.log('EVENT-PRICING - Checking the view');
+    return true;
+  }
+
   private subscribeToPricing(): void {
-    this.pricingActionsService.getPricing(this.pricingId)
+    this.eventPricing$
       .pipe(
         takeUntil(this.destroy$)
       )
@@ -76,7 +82,7 @@ export class EventPricingComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.pricingService.updatePricing(this.eventId, { ...this.eventPricingForm.value, id: this.pricing.id })
+    this.pricingService.updatePricing({ id: this.pricing.id, ...this.eventPricingForm.value })
       .pipe(
         take(1),
         finalize(() => this.closeModal())
@@ -85,7 +91,7 @@ export class EventPricingComponent implements OnInit, OnDestroy {
   }
 
   deletePricing(): void {
-    this.pricingService.deletePricing(this.eventId, this.pricing.id)
+    this.pricingService.deletePricing(this.pricing.eventId, this.pricing.id)
       .pipe(
         take(1)
       )
