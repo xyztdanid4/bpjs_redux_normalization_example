@@ -107,7 +107,7 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
 
   closeModal(): void {
     this.isModalOpen = false;
-    this.changeDetectorRef.detectChanges();
+    this.changeDetectorRef.markForCheck();
   }
 
   updateEvent(): void {
