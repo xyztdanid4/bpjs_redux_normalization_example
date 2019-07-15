@@ -10,10 +10,13 @@
       </button>
     </div>
   </div>
-  <div class="columns">
+  <div
+    class="columns"
+    *ngIf="(eventListItem$ | async) as eventListItem"
+  >
     <div class="column col-4 col-sm-12">
       <h4 class="underline">Event</h4>
-      <h6>{{ (eventListItem$ | async).name }}</h6>
+      <h6>{{ eventListItem.name }}</h6>
       <div class="columns">
         <div class="column col-12 col-sm-12 text-right">
           <button
@@ -27,27 +30,28 @@
     </div>
     <div class="column col-4 col-sm-12">
       <app-event-place
-        [eventPlace$]="getEventPlace()"
-        *ngIf="getEventPlace() | async"
+        *ngIf="(eventPlace$ | async) as eventPlace; else calloutTemplate"
+        [eventPlace]="eventPlace"
         [@deleteAnimation]
       ></app-event-place>
-      <app-callout
-        [callout]="emptyPlaceCallout"
-        *ngIf="!(getEventPlace() | async)"
-        [@calloutRevealAnimation]
-      ></app-callout>
+      <ng-template #calloutTemplate>
+        <app-callout
+          [callout]="emptyPlaceCallout"
+          [@calloutRevealAnimation]
+        ></app-callout>
+      </ng-template>
     </div>
     <div class="column col-4 col-sm-12">
-      <ng-container *ngIf="(eventListItem$ | async).pricings.length >= 0">
+      <ng-container *ngIf="eventListItem.pricings.length >= 0">
         <app-event-pricing
-          *ngFor="let pricingId of (eventListItem$ | async).pricings; trackBy: trackByFn"
+          *ngFor="let pricingId of eventListItem.pricings; trackBy: trackByFn"
           [eventPricing$]="getEventPricing(pricingId)"
           [@deleteAnimation]
         ></app-event-pricing>
       </ng-container>
       <app-callout
         [callout]="emptyPricingCallout"
-        *ngIf="(eventListItem$ | async).pricings.length === 0"
+        *ngIf="eventListItem.pricings.length === 0"
         [@calloutRevealAnimation]
       ></app-callout>
     </div>
@@ -116,7 +120,4 @@
   </div>
 </div>
 
-
-<div style="visibility: hidden">
-  {{ runChangeDetection }}
-</div>
+<div style="visibility: hidden">{{ runChangeDetection }}</div>

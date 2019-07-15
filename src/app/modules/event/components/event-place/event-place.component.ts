@@ -16,7 +16,7 @@ export class EventPlaceComponent implements OnInit, OnChanges {
   isModalOpen: boolean;
   eventPlaceForm: FormGroup;
 
-  @Input() readonly eventPlace$: Observable<Place>;
+  @Input() readonly eventPlace: Place;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,13 +45,7 @@ export class EventPlaceComponent implements OnInit, OnChanges {
   }
 
   private patchForm(): void {
-    this.eventPlace$
-      .pipe(
-        take(1)
-      )
-      .subscribe({
-        next: (place: Place) => this.eventPlaceForm.patchValue(place)
-      });
+    this.eventPlaceForm.patchValue(this.eventPlace);
   }
 
   openModal(): void {
@@ -69,20 +63,18 @@ export class EventPlaceComponent implements OnInit, OnChanges {
       return;
     }
 
-    this.eventPlace$
+    this.placeService.updatePlace({ ...this.eventPlace, ...this.eventPlaceForm.value })
       .pipe(
         take(1),
-        switchMap((place: Place) => this.placeService.updatePlace({ ...place, ...this.eventPlaceForm.value })),
         finalize(() => this.closeModal())
       )
       .subscribe();
   }
 
   deletePlace(): void {
-    this.eventPlace$
+    this.placeService.deletePlace(this.eventPlace.id, this.eventPlace.eventId)
       .pipe(
-        take(1),
-        switchMap((place: Place) => this.placeService.deletePlace(place.id, place.eventId))
+        take(1)
       )
       .subscribe();
   }

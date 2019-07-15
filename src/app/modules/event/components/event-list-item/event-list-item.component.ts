@@ -38,6 +38,7 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
 
   isModalOpen: boolean;
   eventListItemForm: FormGroup;
+  eventPlace$: Observable<Place>;
 
   @Input() readonly eventListItem$: Observable<EventListItem>;
 
@@ -51,6 +52,7 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit(): void {
     this.eventListItemForm = this.createForm();
+    this.eventPlace$ = this.getEventPlace();
   }
 
   ngOnDestroy(): void {
