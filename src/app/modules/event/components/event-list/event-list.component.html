@@ -14,10 +14,10 @@
   >
     <div
       class="column col-12 col-sm-12 animate"
-      *ngFor="let eventId of (getEventList() | async); trackBy: trackByFn"
+      *ngFor="let eventListItem$ of eventListItems; trackBy: trackByFn"
       [@deleteAnimation]
     >
-      <app-event-list-item [eventListItem$]="getEventListItem(eventId)"></app-event-list-item>
+      <app-event-list-item [eventListItem]="eventListItem$ | async"></app-event-list-item>
     </div>
   </div>
   <app-callout
@@ -32,7 +32,4 @@
   *ngIf="isLoading"
 ></div>
 
-
-<div style="visibility: hidden">
-  {{ runChangeDetection }}
-</div>
+<div style="visibility: hidden">{{ runChangeDetection }}</div>

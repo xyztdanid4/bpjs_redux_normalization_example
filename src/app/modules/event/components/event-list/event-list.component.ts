@@ -1,5 +1,5 @@
-import { Component, OnInit, OnChanges, SimpleChanges  } from '@angular/core';
-import { take, finalize } from 'rxjs/operators';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { take, finalize, map, filter } from 'rxjs/operators';
 import { Callout } from '@shared/models/callout/callout.model';
 import { CalloutType } from '@shared/enums/callout-type.enum';
 import { listItemRevealAnimation } from '@shared/animations/list-item-reveal.animation';
@@ -26,6 +26,7 @@ export class EventListComponent implements OnInit, OnChanges {
 
   isError: boolean;
   isLoading: boolean;
+  eventListItems: Observable<EventListItem>[];
 
   constructor(
     private eventService: EventService,
@@ -34,6 +35,7 @@ export class EventListComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.fetchEvents();
+    this.getEventListItems();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -63,6 +65,18 @@ export class EventListComponent implements OnInit, OnChanges {
 
   getEventListItem(eventId: number): Observable<EventListItem> {
     return this.eventActionsService.getEvent(eventId);
+  }
+
+  getEventListItems(): void {
+    this.eventActionsService.getEventList()
+      .pipe(
+        filter(asd => !!asd),
+        map((eventIds: number[]) => this.eventActionsService.getEventListItems(eventIds))
+      )
+      .subscribe({
+        next: (eventListItems: Observable<EventListItem>[]) =>
+          this.eventListItems = eventListItems
+      });
   }
 
   trackByFn(index: number, item: number): number {

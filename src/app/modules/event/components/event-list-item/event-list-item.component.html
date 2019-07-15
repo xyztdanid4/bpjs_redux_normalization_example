@@ -10,10 +10,7 @@
       </button>
     </div>
   </div>
-  <div
-    class="columns"
-    *ngIf="(eventListItem$ | async) as eventListItem"
-  >
+  <div class="columns">
     <div class="column col-4 col-sm-12">
       <h4 class="underline">Event</h4>
       <h6>{{ eventListItem.name }}</h6>
@@ -44,8 +41,8 @@
     <div class="column col-4 col-sm-12">
       <ng-container *ngIf="eventListItem.pricings.length >= 0">
         <app-event-pricing
-          *ngFor="let pricingId of eventListItem.pricings; trackBy: trackByFn"
-          [eventPricing$]="getEventPricing(pricingId)"
+          *ngFor="let pricing of (eventPricings$ | async); trackBy: trackByFn"
+          [eventPricing]="pricing"
           [@deleteAnimation]
         ></app-event-pricing>
       </ng-container>

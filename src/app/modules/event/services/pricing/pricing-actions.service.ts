@@ -4,6 +4,8 @@ import { Pricing } from '../../models/pricing.model';
 import { PricingAction } from '../../models/pricing-action.model';
 import { IAppState } from '@core/reducers/root.reducer';
 import { Observable } from 'rxjs';
+import { NormalizedCollection } from '@core/models/normalized-collection.model';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class PricingActionsService {
@@ -47,7 +49,19 @@ export class PricingActionsService {
     };
   }
 
-  getPricing(pricingId: number): Observable<Pricing> {
-    return this.ngRedux.select(['pricing', `${pricingId}`]);
+  getPricings(eventId: number): Observable<Pricing[]> {
+    return this.ngRedux.select(['pricing'])
+      .pipe(
+        map((normalizedPricing: NormalizedCollection<Pricing>) => {
+          const filteredPricings = [];
+          for (const key in normalizedPricing) {
+            if (normalizedPricing[key].eventId === eventId) {
+              filteredPricings.push(normalizedPricing[key]);
+            }
+          }
+          return filteredPricings;
+        })
+      );
   }
+
 }

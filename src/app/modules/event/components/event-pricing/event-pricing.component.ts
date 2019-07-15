@@ -16,7 +16,7 @@ export class EventPricingComponent implements OnInit, OnChanges {
   isModalOpen: boolean;
   eventPricingForm: FormGroup;
 
-  @Input() readonly eventPricing$: Observable<Pricing>;
+  @Input() readonly eventPricing: Pricing;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,13 +45,7 @@ export class EventPricingComponent implements OnInit, OnChanges {
   }
 
   private patchForm(): void {
-    this.eventPricing$
-      .pipe(
-        take(1)
-      )
-      .subscribe({
-        next: (pricing: Pricing) => this.eventPricingForm.patchValue(pricing)
-      });
+    this.eventPricingForm.patchValue(this.eventPricing);
   }
 
   openModal(): void {
@@ -69,20 +63,18 @@ export class EventPricingComponent implements OnInit, OnChanges {
       return;
     }
 
-    this.eventPricing$
+    this.pricingService.updatePricing({ ...this.eventPricing, ...this.eventPricingForm.value })
       .pipe(
         take(1),
-        switchMap((pricing: Pricing) => this.pricingService.updatePricing({ ...pricing, ...this.eventPricingForm.value })),
         finalize(() => this.closeModal())
       )
       .subscribe();
   }
 
   deletePricing(): void {
-    this.eventPricing$
+    this.pricingService.deletePricing(this.eventPricing.eventId, this.eventPricing.id)
       .pipe(
-        take(1),
-        switchMap((pricing: Pricing) => this.pricingService.deletePricing(pricing.eventId, pricing.id))
+        take(1)
       )
       .subscribe();
   }

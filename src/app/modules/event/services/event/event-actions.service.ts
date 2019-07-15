@@ -49,4 +49,8 @@ export class EventActionsService {
     return this.ngRedux.select(['eventListItem', `${eventId}`]);
   }
 
+  getEventListItems(eventIds: number[]): Observable<EventListItem>[] {
+    return eventIds.map((eventId: number) => this.getEvent(eventId));
+  }
+
 }

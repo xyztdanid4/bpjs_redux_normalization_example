@@ -39,8 +39,9 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
   isModalOpen: boolean;
   eventListItemForm: FormGroup;
   eventPlace$: Observable<Place>;
+  eventPricings$: Observable<Pricing[]>;
 
-  @Input() readonly eventListItem$: Observable<EventListItem>;
+  @Input() readonly eventListItem: EventListItem;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,6 +54,7 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     this.eventListItemForm = this.createForm();
     this.eventPlace$ = this.getEventPlace();
+    this.eventPricings$ = this.getEventPricing();
   }
 
   ngOnDestroy(): void {
@@ -76,27 +78,15 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private patchForm(): void {
-    this.eventListItem$
-      .pipe(
-        take(1)
-      )
-      .subscribe({
-        next: (eventListItem: EventListItem) => this.eventListItemForm.patchValue({ name: eventListItem.name })
-      });
+    this.eventListItemForm.patchValue({ name: this.eventListItem.name });
   }
 
   getEventPlace(): Observable<Place> {
-    return this.eventListItem$
-      .pipe(
-        takeUntil(this.destroy$),
-        filter((eventListItem: EventListItem) => !!eventListItem),
-        map((eventListItem: EventListItem) => eventListItem.place),
-        switchMap((placeId: number) => this.placeActionsService.getPlace(placeId))
-      );
+    return this.placeActionsService.getPlace(this.eventListItem.place);
   }
 
-  getEventPricing(pricingId: number): Observable<Pricing> {
-    return this.pricingActionsService.getPricing(pricingId);
+  getEventPricing(): Observable<Pricing[]> {
+    return this.pricingActionsService.getPricings(this.eventListItem.id);
   }
 
   openModal(): void {
@@ -114,22 +104,18 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
       return;
     }
 
-    this.eventListItem$
+    this.eventService.updateEvent({ ...this.eventListItem, ...this.eventListItemForm.value })
       .pipe(
         take(1),
-        switchMap((eventListItem: EventListItem) =>
-          this.eventService.updateEvent({ ...eventListItem, ...this.eventListItemForm.value })),
         finalize(() => this.closeModal())
       )
       .subscribe();
   }
 
   deleteEvent(): void {
-    this.eventListItem$
+    this.eventService.deleteEvent(this.eventListItem)
       .pipe(
-        take(1),
-        switchMap((eventListItem: EventListItem) =>
-          this.eventService.deleteEvent(eventListItem))
+        take(1)
       )
       .subscribe();
   }

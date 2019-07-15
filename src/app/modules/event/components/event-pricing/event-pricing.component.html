@@ -1,12 +1,10 @@
 <!-- CONTENT -->
 <div class="container">
-  <div
-    class="columns"
-  >
+  <div class="columns">
     <div class="column col-12">
       <h4 class="underline">Pricing</h4>
-      <h6>{{ (eventPricing$ | async).name }}</h6>
-      <h6>{{ (eventPricing$ | async).price }}</h6>
+      <h6>{{ eventPricing.name }}</h6>
+      <h6>{{ eventPricing.price }}</h6>
     </div>
     <div class="column col-12 col-sm-12 text-right button-group">
       <button
@@ -104,7 +102,4 @@
   </div>
 </div>
 
-
-<div style="visibility: hidden">
-  {{ runChangeDetection }}
-</div>
+<div style="visibility: hidden">{{ runChangeDetection }}</div>
