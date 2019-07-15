@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef, SimpleChanges, OnChanges } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { take, finalize, takeUntil, switchMap, map } from 'rxjs/operators';
+import { take, finalize, takeUntil, switchMap, map, filter } from 'rxjs/operators';
 import { Callout } from '@shared/models/callout/callout.model';
 import { CalloutType } from '@shared/enums/callout-type.enum';
 import { EventService } from '@modules/event/services/event/event.service';
@@ -87,6 +87,7 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
     return this.eventListItem$
       .pipe(
         takeUntil(this.destroy$),
+        filter((eventListItem: EventListItem) => !!eventListItem),
         map((eventListItem: EventListItem) => eventListItem.place),
         switchMap((placeId: number) => this.placeActionsService.getPlace(placeId))
       );
