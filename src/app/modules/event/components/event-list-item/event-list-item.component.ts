@@ -12,6 +12,7 @@ import { Place } from '@modules/event/models/place.model';
 import { PricingActionsService } from '@modules/event/services/pricing/pricing-actions.service';
 import { Pricing } from '@modules/event/models/pricing.model';
 import { PlaceActionsService } from '@modules/event/services/place/place-actions.service';
+import { EventActionsService } from '@modules/event/services/event/event-actions.service';
 
 @Component({
   selector: 'app-event-list-item',
@@ -38,20 +39,23 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
 
   isModalOpen: boolean;
   eventListItemForm: FormGroup;
+  eventListItem: EventListItem;
   eventPlace$: Observable<Place>;
   eventPricings$: Observable<Pricing[]>;
 
-  @Input() readonly eventListItem: EventListItem;
+  @Input() readonly eventId: number;
 
   constructor(
     private formBuilder: FormBuilder,
     private eventService: EventService,
     private changeDetectorRef: ChangeDetectorRef,
     private placeActionsService: PlaceActionsService,
-    private pricingActionsService: PricingActionsService
+    private pricingActionsService: PricingActionsService,
+    private eventActionsService: EventActionsService
   ) { }
 
   ngOnInit(): void {
+    this.getEventListItem();
     this.eventListItemForm = this.createForm();
     this.eventPlace$ = this.getEventPlace();
     this.eventPricings$ = this.getEventPricing();
@@ -79,6 +83,14 @@ export class EventListItemComponent implements OnInit, OnDestroy, OnChanges {
 
   private patchForm(): void {
     this.eventListItemForm.patchValue({ name: this.eventListItem.name });
+  }
+
+  getEventListItem(): void {
+    this.eventActionsService.getEvent(this.eventId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (eventListItem: EventListItem) => this.eventListItem = eventListItem
+      });
   }
 
   getEventPlace(): Observable<Place> {

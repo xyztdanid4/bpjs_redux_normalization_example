@@ -9,20 +9,20 @@
   </div>
   <div
     class="columns"
-    *ngIf="(getEventList() | async).length > 0"
+    *ngIf="eventList && eventList.length > 0"
     [@listItemRevealAnimation]
   >
     <div
       class="column col-12 col-sm-12 animate"
-      *ngFor="let eventListItem$ of eventListItems; trackBy: trackByFn"
+      *ngFor="let eventId of eventList; trackBy: trackByFn"
       [@deleteAnimation]
     >
-      <app-event-list-item [eventListItem]="eventListItem$ | async"></app-event-list-item>
+      <app-event-list-item [eventId]="eventId"></app-event-list-item>
     </div>
   </div>
   <app-callout
     [callout]="emptyEventsCallout"
-    *ngIf="(getEventList() | async).length === 0"
+    *ngIf="eventList && eventList.length === 0"
     [@calloutRevealAnimation]
   ></app-callout>
 </div>
