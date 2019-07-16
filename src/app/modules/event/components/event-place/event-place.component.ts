@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef, SimpleChanges, OnChanges } from '@angular/core';
 import { Place } from '@modules/event/models/place.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { take, finalize, switchMap } from 'rxjs/operators';
+import { take, finalize } from 'rxjs/operators';
 import { PlaceService } from '@modules/event/services/place/place.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-event-place',

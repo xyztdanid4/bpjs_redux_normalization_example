@@ -2,8 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef, O
 import { Pricing } from '@modules/event/models/pricing.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PricingService } from '@modules/event/services/pricing/pricing.service';
-import { take, finalize, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { take, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-pricing',
