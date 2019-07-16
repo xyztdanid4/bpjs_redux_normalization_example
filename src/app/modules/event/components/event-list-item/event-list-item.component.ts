@@ -43,11 +43,6 @@ export class EventListItemComponent implements OnInit, OnChanges {
     console.log('CHANGED', 'EVENT-LIST-ITEM', changes);
   }
 
-  get runChangeDetection() {
-    console.log('EVENT-LIST-ITEM - Checking the view');
-    return true;
-  }
-
   private createForm(): FormGroup {
     return this.formBuilder.group({
       name: [null, [Validators.required]]
@@ -89,6 +84,11 @@ export class EventListItemComponent implements OnInit, OnChanges {
         take(1)
       )
       .subscribe();
+  }
+
+  get runChangeDetection() {
+    console.log('EVENT-LIST-ITEM - Checking the view');
+    return true;
   }
 
 }

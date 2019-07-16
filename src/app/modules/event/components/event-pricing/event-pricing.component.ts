@@ -30,11 +30,6 @@ export class EventPricingComponent implements OnInit, OnChanges {
     console.log('CHANGED', 'EVENT-PRICING', changes);
   }
 
-  get runChangeDetection() {
-    console.log('EVENT-PRICING - Checking the view');
-    return true;
-  }
-
   private createForm(): FormGroup {
     return this.formBuilder.group({
       name: [null, [Validators.required]],
@@ -79,5 +74,11 @@ export class EventPricingComponent implements OnInit, OnChanges {
       )
       .subscribe();
   }
+
+  get runChangeDetection() {
+    console.log('EVENT-PRICING - Checking the view');
+    return true;
+  }
+
 
 }

@@ -36,6 +36,10 @@ export class EventListComponent implements OnInit, OnDestroy, OnChanges {
     this.subscribeToEvents();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('CHANGED', 'EVENT-LIST', changes);
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -70,6 +74,11 @@ export class EventListComponent implements OnInit, OnDestroy, OnChanges {
       .subscribe({
         next: (events: Event[]) => this.events = events
       });
+  }
+
+  get runChangeDetection() {
+    console.log('EVENT-LIST - Checking the view');
+    return true;
   }
 
 }

@@ -29,11 +29,6 @@ export class EventPlaceComponent implements OnInit, OnChanges {
     console.log('CHANGED', 'EVENT-PLACE', changes);
   }
 
-  get runChangeDetection() {
-    console.log('EVENT-PLACE - Checking the view');
-    return true;
-  }
-
   private createForm(): FormGroup {
     return this.formBuilder.group({
       name: [null, [Validators.required]],
@@ -78,6 +73,11 @@ export class EventPlaceComponent implements OnInit, OnChanges {
         take(1)
       )
       .subscribe();
+  }
+
+  get runChangeDetection() {
+    console.log('EVENT-PLACE - Checking the view');
+    return true;
   }
 
 }
