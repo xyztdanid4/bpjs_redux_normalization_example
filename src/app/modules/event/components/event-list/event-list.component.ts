@@ -45,10 +45,6 @@ export class EventListComponent implements OnInit, OnDestroy, OnChanges {
     this.destroy$.complete();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('CHANGED', 'EVENT-LIST', changes);
-  }
-
   get runChangeDetection() {
     console.log('EVENT-LIST - Checking the view');
     return true;
