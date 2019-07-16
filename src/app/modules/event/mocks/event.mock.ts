@@ -55,11 +55,11 @@ export const EVENT_MOCK: IEvent[] = [
   },
   {
     id: 3,
-    name: 'event_name_3',
+    name: 'BudapestJs meetup September',
     place: {
       id: 3,
-      name: '1083, Budapest, Bókay János u. 44-46',
-      address: 'place_address_3'
+      name: 'Adnovum HQ',
+      address: '1083, Budapest, Bókay János u. 44-46'
     },
     pricings: [
       {
