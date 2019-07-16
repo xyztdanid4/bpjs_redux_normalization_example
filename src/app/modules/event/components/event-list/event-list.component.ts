@@ -76,9 +76,4 @@ export class EventListComponent implements OnInit, OnDestroy, OnChanges {
       });
   }
 
-  get runChangeDetection() {
-    console.log('EVENT-LIST - Checking the view');
-    return true;
-  }
-
 }
