@@ -1,34 +1,15 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Event } from '../../models/event.model';
 import { take, finalize } from 'rxjs/operators';
 import { Callout } from '@shared/models/callout/callout.model';
 import { CalloutType } from '@shared/enums/callout-type.enum';
 import { EventService } from '@modules/event/services/event/event.service';
-// import { style, trigger, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-event-list-item',
   templateUrl: './event-list-item.component.html',
-  styleUrls: ['./event-list-item.component.scss'],
-  // animations: [
-  //   trigger('items', [
-  //     transition(':enter', [
-  //       style({ transform: 'scale(0.5)', opacity: 0 }),  // initial
-  //       animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)',
-  //         style({ transform: 'scale(1)', opacity: 1 }))  // final
-  //     ]),
-  //     transition(':leave', [
-  //       style({ transform: 'scale(1)', opacity: 1, height: '*' }),
-  //       animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)',
-  //         style({
-  //           transform: 'translateY(-100%)', opacity: 0,
-  //           height: '0px', margin: '0px'
-  //         }))
-  //     ])
-  //   ])
-  // ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./event-list-item.component.scss']
 })
 export class EventListItemComponent implements OnInit {
 
@@ -99,10 +80,6 @@ export class EventListItemComponent implements OnInit {
         take(1)
       )
       .subscribe();
-  }
-
-  trackByFn(index: number): number {
-    return index;
   }
 
 }

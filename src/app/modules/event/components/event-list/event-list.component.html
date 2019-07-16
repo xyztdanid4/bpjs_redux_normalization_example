@@ -14,7 +14,7 @@
   >
     <div
       class="column col-12 col-sm-12 animate"
-      *ngFor="let event of events; trackBy: trackByFn"
+      *ngFor="let event of events"
     >
       <app-event-list-item [event]="event"></app-event-list-item>
     </div>

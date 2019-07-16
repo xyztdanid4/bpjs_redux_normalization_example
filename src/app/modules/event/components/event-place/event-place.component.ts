@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Place } from '@modules/event/models/place.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { take, finalize } from 'rxjs/operators';
@@ -7,8 +7,7 @@ import { PlaceService } from '@modules/event/services/place/place.service';
 @Component({
   selector: 'app-event-place',
   templateUrl: './event-place.component.html',
-  styleUrls: ['./event-place.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./event-place.component.scss']
 })
 export class EventPlaceComponent implements OnInit {
 
