@@ -10,7 +10,6 @@
   <div
     class="columns"
     *ngIf="events.length > 0"
-    [@listItemRevealAnimation]
   >
     <div
       class="column col-12 col-sm-12 animate"
@@ -29,3 +28,7 @@
   class="loading loading-lg loader"
   *ngIf="isLoading"
 ></div>
+
+<div style="visibility: hidden">
+  {{ runChangeDetection }}
+</div>
