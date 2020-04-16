@@ -54,7 +54,7 @@
     "@types/luxon": "^1.15.1",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.1",
-    "https-proxy-agent": "^2.2.1",
+    "https-proxy-agent": "^2.2.3",
     "husky": "^2.2.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
